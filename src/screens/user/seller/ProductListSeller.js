@@ -14,7 +14,7 @@ const ProductListSeller = (props) => {
         props.navigation.navigate("Product Detail", { item: item, userId: userId })
       }
     >
-    <View style={{ flexDirection: "column", width: width / 2, backgroundColor: "white", height: height }}>
+    <View style={{ flexDirection: "column", width: width / 2, backgroundColor: "white" }}>
         <ProductCardSeller 
           item={item}
           navigation={props.navigation}

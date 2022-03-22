@@ -87,7 +87,7 @@ const ProductContainerSeller = (props) => {
           size > 0 ? (
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 190 }}
+              contentContainerStyle={{ paddingBottom: 200 }}
             >
               <View style={styles.listContainer}>
                 {sellerItems &&
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexWrap: "wrap",
     backgroundColor: "#fff",
-    marginTop: 15,
+    marginTop: 10,
   },
   header: {
     margin: 15,

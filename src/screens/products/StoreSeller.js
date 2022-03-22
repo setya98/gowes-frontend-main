@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  Dimensions
 } from "react-native";
 import { Text } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -22,6 +23,7 @@ import {
   FETCH_ITEM_SELLER_QUERY,
 } from "../../util/graphql";
 
+var { height } = Dimensions.get("window") 
 
 const StoreSeller = (props) => {
   const context = useContext(AuthContext);
@@ -308,10 +310,8 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     height: "100%",
-    flexDirection: "row",
-    alignItems: "flex-start",
-    marginTop: 25,
     backgroundColor: "#fff",
+    alignSelf: "flex-start"
   },
 });
 
