@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
   detailContainer: {
     flexGrow: 1,
     backgroundColor: "#fff",
-    elevation: 5,
+    elevation: 3,
     marginTop: 25,
     height: 250,
     borderRadius: 30,

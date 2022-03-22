@@ -72,7 +72,8 @@ const StoreSeller = (props) => {
           color="#000"
         />
       ) : (
-        <SafeAreaView style={{ backgroundColor: "#fff" }}>
+        <SafeAreaView>
+          <View style={{backgroundColor: "#fff"}}>
           <View style={styles.header}>
             <FontAwesome
               onPress={() => props.navigation.navigate("Buyer")}
@@ -95,7 +96,6 @@ const StoreSeller = (props) => {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               paddingBottom: 190,
-              backgroundColor: "#f2f2f22",
             }}
           >
             <View style={{ flexDirection: "row", marginTop: 15 }}>
@@ -283,6 +283,7 @@ const StoreSeller = (props) => {
               </View>
             </View>
           </ScrollView>
+          </View>
         </SafeAreaView>
       )}
     </>
@@ -293,7 +294,6 @@ const styles = StyleSheet.create({
   header: {
     margin: 15,
     flexDirection: "row",
-    backgroundColor: "#fff",
     justifyContent: "space-between",
   },
   ImageContainer: {
@@ -301,17 +301,17 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   detailContainer: {
-    flexGrow: 1,
-    backgroundColor: "#fff",
-    elevation: 25,
+    elevation: 2,
     marginTop: 25,
     height: "100%",
     borderRadius: 30,
   },
   listContainer: {
     height: "100%",
-    backgroundColor: "#fff",
-    alignSelf: "flex-start"
+    alignSelf: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 15
   },
 });
 

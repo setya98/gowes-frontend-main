@@ -14,7 +14,7 @@ const ProductList = (props) => {
         props.navigation.navigate("Product Detail", { item: item, userId: userId  })
       }
     >
-      <View style={{ width: width / 2, backgroundColor: "white" }}>
+      <View style={{ width: width / 2, backgroundColor: "#fff" }}>
         <ProductCard item={item} userId={userId} />
       </View>
     </TouchableWithoutFeedback>
