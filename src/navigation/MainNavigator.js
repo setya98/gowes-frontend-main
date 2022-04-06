@@ -27,9 +27,15 @@ export default function MainNavigator({ navigation }) {
         <Main.Screen 
           name="HomeTabNavigator"
           component={BottomTabNavigator}
-          options={({ navigation, route }) => ({
-            headerShown: false
-          })}
+          options={({ route }) => ({
+            tabBarVisible: ((route) => {
+              const routeName = getFocusedRouteNameFromRoute(route) ?? ""
+               if (routeName === "Cart") {
+                return false
+               }
+               return true
+              })(route)
+            })}
         />
       </Main.Navigator>
   );

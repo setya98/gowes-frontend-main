@@ -229,25 +229,39 @@ const EditBuyer = (props) => {
   const fall = new Animated.Value(1);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
-        <FontAwesome
-          onPress={() => props.navigation.goBack()}
-          name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
-        />
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            letterSpacing: 0.3,
-            marginStart: 110,
-          }}
-        >
-          Edit Profil
-        </Text>
-      </View>
+      <View
+            style={{
+              height: 35,
+              width: 35,
+              backgroundColor: "#f2f2f2",
+              alignItems: "center",
+              borderRadius: 10,
+              justifyContent: "center",
+              elevation: 3,
+              marginStart: 5,
+            }}
+          >
+            <FontAwesome
+              onPress={() => props.navigation.goBack()}
+              name="chevron-left"
+              size={14}
+              style={{ alignSelf: "center", marginStart: -2 }}
+            />
+          </View>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              letterSpacing: 0.3,
+              marginEnd: 130,
+              marginTop: 5,
+            }}
+          >
+            Edit Profil
+          </Text>
+        </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -270,6 +284,7 @@ const EditBuyer = (props) => {
           style={{
             marginBottom: 20,
             opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+            marginTop: 15
           }}
         >
          <View style={{ alignItems: "center", marginBottom: 10 }}>
@@ -517,7 +532,7 @@ const styles = StyleSheet.create({
   header: {
     margin: 15,
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
+    justifyContent: "space-between"
   },
   panelButtonTitle: {
     fontSize: 20,

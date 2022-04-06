@@ -70,20 +70,34 @@ const ProductReview = (props) => {
 
   return (
     <>
-    <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
-        <FontAwesome
-          onPress={() => props.navigation.goBack()}
-          name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
-        />
+        <View
+              style={{
+                height: 35,
+                width: 35,
+                backgroundColor: "#f2f2f2",
+                alignItems: "center",
+                borderRadius: 10,
+                justifyContent: "center",
+                elevation: 3,
+                marginStart: 5
+              }}
+            >
+              <FontAwesome
+                onPress={() => props.navigation.goBack()}
+                name="chevron-left"
+                size={14}
+                style={{ alignSelf: "center", marginStart: -2}}
+              />
+            </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginStart: 100,
+            marginStart: 80,
+            marginTop: 5
           }}
         >
           Ulasan Produk
@@ -96,7 +110,7 @@ const ProductReview = (props) => {
           backgroundColor: "#f2f2f2",
         }}
       >
-          <Card.Content style={{marginStart: -20, marginTop: -5, backgroundColor: "#f2f2f2"}}>
+          <Card.Content style={{marginStart: -20, marginTop: 10, backgroundColor: "#f2f2f2"}}>
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -224,7 +238,6 @@ const styles = StyleSheet.create({
     header: {
       margin: 15,
       flexDirection: "row",
-      backgroundColor: "#f2f2f2",
     },
     text: {
         color: '#000',

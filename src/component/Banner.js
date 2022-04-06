@@ -28,6 +28,12 @@ const Banner = () => {
             showButtons={false}
             autoplay={true}
             autoplayTimeout={3}
+            dotStyle={{
+              marginBottom: -15
+            }}
+            activeDotStyle={{
+              marginBottom: -15
+            }}
           >
             {bannerData.map((item) => {
               return (

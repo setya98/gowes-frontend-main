@@ -62,21 +62,30 @@ const ProductDetail = (props) => {
       ) : (
         <>
           <View style={styles.header}>
-            <FontAwesome
-              onPress={() => props.navigation.goBack()}
-              name="chevron-left"
-              size={18}
-              style={{ marginTop: 14 }}
-            />
-            <TouchableWithoutFeedback
-              onPress={() => props.navigation.navigate("Cart")}
+            <View
+              style={{
+                height: 35,
+                width: 35,
+                backgroundColor: "#f2f2f2",
+                alignItems: "center",
+                borderRadius: 10,
+                justifyContent: "center",
+                marginTop: 5,
+                elevation: 3,
+              }}
             >
-              <Image
-                source={require("../../assets/bag.png")}
-                resizeMode="contain"
-                style={{ width: 25, height: 30, marginTop: 7, marginBottom: 5 }}
+              <FontAwesome
+                onPress={() => props.navigation.goBack()}
+                name="chevron-left"
+                size={14}
+                style={{ alignSelf: "center", marginStart: -2}}
               />
+            </View>
+            <View style={{marginTop: 5, marginBottom: 5}}>
+            <TouchableWithoutFeedback>
+              <ButtonWishlist user={user} item={itemDetail} />
             </TouchableWithoutFeedback>
+            </View>
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
@@ -87,23 +96,29 @@ const ProductDetail = (props) => {
                 <ImageSlide images={itemDetail.images} />
               </View>
               <View style={styles.detailContainer}>
-                <View style={styles.line} />
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    marginStart: -5,
-                  }}
-                >
-                  <BorderPrice title={itemDetail.price} />
-                  <View style={{ marginTop: 25, marginEnd: 20 }}>
-                    <TouchableWithoutFeedback>
-                      <ButtonWishlist user={user} item={itemDetail} />
-                    </TouchableWithoutFeedback>
-                  </View>
-                </View>
+                <View style={{marginTop: 15}}>
                 <TitleHeader style={styles.text} title={itemDetail.name} />
-                <View style={styles.headerContainer}>
+                </View>
+                <View style={{flexDirection: "row", marginStart: 20}}>
+                <Text
+                    style={{
+                      fontWeight: "300",
+                      color: "#000",
+                    }}
+                  >
+                    Tersisa
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: "300",
+                      color: "#000",
+                      marginStart: 5
+                    }}
+                  >
+                    {itemDetail.stock}
+                  </Text>
+                  </View>
+                <View style={styles.review}>
                   <TouchableOpacity
                     onPress={() =>
                       props.navigation.navigate("Product Review", {
@@ -113,40 +128,20 @@ const ProductDetail = (props) => {
                   >
                     <Icon name="star" size={20} color={"#F18c06"} />
                     <Text style={styles.textRating}>{items.score}</Text>
+                    <Text
+                      style={{
+                        marginTop: -37,
+                        marginStart: 25,
+                        fontWeight: "600",
+                        color: "#595959",
+                        fontSize: 14,
+                      }}
+                    >
+                      Lihat Review
+                    </Text>
                   </TouchableOpacity>
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      fontWeight: "300",
-                      color: "#000",
-                      fontSize: 12,
-                    }}
-                  >
-                    /5
-                  </Text>
-                  <Text
-                    style={{
-                      marginLeft: 10,
-                      marginTop: 2,
-                      fontWeight: "300",
-                      color: "#000",
-                    }}
-                  >
-                    Tersisa
-                  </Text>
-                  <Text
-                    style={{
-                      marginLeft: 5,
-                      marginTop: 2,
-                      fontWeight: "300",
-                      color: "#000",
-                    }}
-                  >
-                    {itemDetail.stock}
-                  </Text>
                 </View>
-                <Divider style={{ height: 1, marginTop: 5 }}></Divider>
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                   onPress={() =>
                     props.navigation.navigate("Store Seller", {
                       storeId: itemDetail.user.id,
@@ -154,50 +149,79 @@ const ProductDetail = (props) => {
                     })
                   }
                 >
-                  <Avatar.Image
-                    size={40}
-                    source={{ uri: itemDetail.user.seller.avatar }}
+                  <View
                     style={{
+                      width: "90%",
+                      height: 75,
+                      backgroundColor: "#fff",
                       marginStart: 15,
-                      marginTop: 28,
-                      marginEnd: 10,
-                      borderRadius: 60,
-                    }}
-                  />
-                </TouchableOpacity>
-                <View style={{ flexDirection: "column", height: 40 }}>
-                  <Text
-                    style={{
-                      marginStart: 70,
-                      marginTop: -42,
-                      fontWeight: "bold",
-                      color: "#000",
-                      fontSize: 18,
+                      marginTop: 35,
+                      borderRadius: 15,
+                      elevation: 0.2,
                     }}
                   >
-                    {itemDetail.user.seller.username}
-                  </Text>
-                  <View style={{ flexDirection: "row" }}>
-                    <FontAwesome
-                      name="map-marker"
-                      size={15}
-                      color={"#595959"}
-                      style={{ marginStart: 70, marginTop: 10 }}
-                    />
-                    <Text
+                    <Image
+                      source={{ uri: itemDetail.user.seller.avatar }}
                       style={{
-                        marginStart: 8,
-                        fontSize: 16,
-                        fontWeight: "500",
-                        color: "#595959",
-                        marginTop: 8,
+                        marginStart: 15,
+                        marginTop: 15,
+                        marginEnd: 10,
+                        borderRadius: 10,
+                        width: 45,
+                        height: 45,
+                      }}
+                    />
+                    <View style={{ flexDirection: "column", height: 40 }}>
+                      <Text
+                        style={{
+                          marginStart: 75,
+                          marginTop: -47,
+                          fontWeight: "bold",
+                          color: "#000",
+                          fontSize: 18,
+                        }}
+                      >
+                        {itemDetail.user.seller.username}
+                      </Text>
+                      <View style={{ flexDirection: "row" }}>
+                        <FontAwesome
+                          name="map-marker"
+                          size={14}
+                          color={"#595959"}
+                          style={{ marginStart: 75, marginTop: 10 }}
+                        />
+                        <Text
+                          style={{
+                            marginStart: 8,
+                            fontSize: 15,
+                            fontWeight: "bold",
+                            color: "#595959",
+                            marginTop: 8,
+                          }}
+                        >
+                          {itemDetail.user.address.cityName}
+                        </Text>
+                      </View>
+                    </View>
+                    <View
+                      style={{
+                        height: 35,
+                        width: 35,
+                        backgroundColor: "#f2f2f2",
+                        marginTop: -80,
+                        borderRadius: 10,
+                        justifyContent: "center",
+                        alignSelf: "flex-end",
+                        marginEnd: 15,
                       }}
                     >
-                      {itemDetail.user.address.cityName}
-                    </Text>
+                      <FontAwesome
+                        name="chevron-right"
+                        style={{ alignSelf: "center" }}
+                      />
+                    </View>
                   </View>
-                </View>
-                <Divider style={{ height: 1 }}></Divider>
+                </TouchableWithoutFeedback>
                 <Text
                   style={{
                     marginTop: 30,
@@ -212,21 +236,33 @@ const ProductDetail = (props) => {
                 <View style={{ flexDirection: "row" }}>
                   <View style={{ flexDirection: "column" }}>
                     <View style={{ flexDirection: "row" }}>
+                    <View
+                        style={{
+                          height: 35,
+                          width: 35,
+                          backgroundColor: "#fff",
+                          justifyContent: "center",
+                          borderRadius: 10,
+                          elevation: 1,
+                          marginStart: 20,
+                          marginTop: 20
+                        }}
+                      >
                       <Image
                         source={require("../../assets/box.png")}
                         resizeMode="contain"
                         style={{
-                          width: 20,
-                          height: 20,
-                          marginStart: 20,
-                          marginTop: 30,
+                          width: 16,
+                          height: 16,
                           tintColor: "#595959",
+                          alignSelf: "center"
                         }}
                       />
+                      </View>
                       <Text
                         style={{
-                          marginTop: 30,
-                          marginStart: 15,
+                          marginTop: 27,
+                          marginStart: 10,
                           fontWeight: "bold",
                           color: "#595959",
                         }}
@@ -238,23 +274,36 @@ const ProductDetail = (props) => {
                       style={{
                         flexDirection: "row",
                         marginStart: 20,
-                        marginTop: 25,
+                        marginTop: 20,
                       }}
                     >
+                      <View
+                        style={{
+                          height: 35,
+                          width: 35,
+                          backgroundColor: "#fff",
+                          justifyContent: "center",
+                          borderRadius: 10,
+                          elevation: 1,
+                        }}
+                      >
                       <Image
                         source={require("../../assets/settings.png")}
                         resizeMode="contain"
                         style={{
-                          width: 23,
-                          height: 23,
+                          width: 18,
+                          height: 18,
                           tintColor: "#595959",
+                          alignSelf: "center"
                         }}
                       />
+                      </View>
                       <Text
                         style={{
-                          marginStart: 15,
+                          marginStart: 10,
                           fontWeight: "bold",
                           color: "#595959",
+                          marginTop: 7
                         }}
                       >
                         {itemDetail.category}
@@ -269,19 +318,32 @@ const ProductDetail = (props) => {
                     }}
                   >
                     <View style={{ flexDirection: "row" }}>
-                      <Image
-                        source={require("../../assets/weight.png")}
-                        resizeMode="contain"
+                      <View
                         style={{
-                          width: 20,
-                          height: 20,
-                          tintColor: "#595959",
+                          height: 35,
+                          width: 35,
+                          backgroundColor: "#fff",
+                          justifyContent: "center",
+                          borderRadius: 10,
+                          elevation: 1,
+                          marginTop: -10
                         }}
-                      />
+                      >
+                        <Image
+                          source={require("../../assets/weight.png")}
+                          resizeMode="contain"
+                          style={{
+                            width: 17,
+                            height: 17,
+                            tintColor: "#595959",
+                            alignSelf: "center",
+                          }}
+                        />
+                      </View>
                       <Text
                         style={{
-                          marginTop: 2,
-                          marginStart: 15,
+                          marginTop: -1,
+                          marginStart: 10,
                           fontWeight: "bold",
                           color: "#595959",
                         }}
@@ -290,31 +352,44 @@ const ProductDetail = (props) => {
                       </Text>
                     </View>
                     <View style={{ flexDirection: "row", marginTop: 25 }}>
+                    <View
+                        style={{
+                          height: 35,
+                          width: 35,
+                          backgroundColor: "#fff",
+                          justifyContent: "center",
+                          borderRadius: 10,
+                          elevation: 1,
+                          marginTop: -5,
+                        }}
+                      >
                       <Image
                         source={require("../../assets/cube.png")}
                         resizeMode="contain"
                         style={{
-                          width: 23,
-                          height: 23,
+                          width: 18,
+                          height: 18,
                           tintColor: "#595959",
+                          alignSelf: "center"
                         }}
                       />
+                      </View>
                       <Text
                         style={{
-                          marginStart: 13,
+                          marginStart: 10,
                           fontWeight: "bold",
                           color: "#595959",
+                          marginTop: 3
                         }}
                       >
                         {itemDetail.dimension.length} x{" "}
                         {itemDetail.dimension.width} x{" "}
-                        {itemDetail.dimension.height} (cm)
+                        {itemDetail.dimension.height} cm
                       </Text>
                     </View>
                   </View>
                 </View>
-                <Divider style={{ height: 1, marginTop: 25 }}></Divider>
-                <Text
+                 <Text
                   style={{
                     marginTop: 30,
                     marginLeft: 15,
@@ -373,16 +448,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   bottomHeader: {
-    height: 70,
+    height: 60,
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
+    backgroundColor: "#fff",
     justifyContent: "space-between",
+    marginTop: 10,
+    elevation: 1
   },
-  headerContainer: {
-    marginTop: -5,
-    marginLeft: 20,
+  review: {
+    marginTop: -22,
+    marginEnd: 30,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
   },
   ImageContainer: {
     flexGrow: 1,

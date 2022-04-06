@@ -1,46 +1,47 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Badge, Text } from "native-base";
-
+import { CartItems } from "../../Redux/actions/cartItemAction";
 import { connect } from "react-redux";
 
 const CartIcon = (props) => {
+
   return (
     <>
-      {props.item.length ? (
+      {props.cartItems.length > 0 ? (
         <Badge style={styles.badge}>
-          <Text style={styles.text}>{props.item.length}</Text>
+          <Text style={styles.text}>{props.cartItems.length}</Text>
         </Badge>
-      ) : null}
+      ) : <>
+        <Badge style={styles.badge}>
+          <Text style={styles.text}>{props.cartItems.length}</Text>
+        </Badge>
+      </> } 
     </>
   );
 };
 
-const mapStateProps = (state) => {
-  const { item } = state;
-  return {
-    item : item,
-  };
-};
+const mapStateToProps = (state) => ({
+  cartItems: state.cartItems.cartItems
+});
 
 const styles = StyleSheet.create({
   badge: {
-    width: 16,
-    height:18, 
+    width: 18,
+    height: 19, 
     position: "absolute",
-    flex: 1,
     justifyContent: "center",
     alignContent: "center",
-    top: -2,
-    right: -4,
+    top: -5,    
+    right: -10
   },
   text: {
     fontSize: 12,
-    width: 13,
+    width: 20,
     alignSelf: "center",
     fontWeight: "bold",
-    top: -2
+    top: -1
   },
 });
 
-export default connect(mapStateProps)(CartIcon);
+export default connect(mapStateToProps, { CartItems })(CartIcon);

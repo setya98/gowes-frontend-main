@@ -39,6 +39,10 @@ export const categoryOptions = [
     orderIds: [],
   };
 
+  export const initialCartItems = {
+    cartItems: []
+  }
+
   export const initialPhotos = {
     photos: undefined,
   };

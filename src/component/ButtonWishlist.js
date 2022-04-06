@@ -61,16 +61,16 @@ function ButtonWishlist({ user, item: {id, bookmarkedBy} }) {
     bookmarked ? (
       <View
         style={{
-          width: 32,
-          height: 32,
-          backgroundColor: "rgba(245, 42, 42, 0.2)",
-          borderRadius: 20,
+          width: 35,
+          height: 35,
+          backgroundColor: "#f2f2f2",
+          borderRadius: 10,
           justifyContent: "center",
         }}
       >
         <Icon
           name="heart"
-          size={18}
+          size={15}
           color={"#C92643"}
           style={{ alignSelf: "center" }}
         />
@@ -78,17 +78,17 @@ function ButtonWishlist({ user, item: {id, bookmarkedBy} }) {
     ) : (
       <View
         style={{
-          width: 32,
-          height: 32,
-          backgroundColor: "rgba(0,0,0,0.2)",
-          borderRadius: 20,
+          width: 35,
+          height: 35,
+          backgroundColor: "#f2f2f2",
+          borderRadius: 10,
           justifyContent: "center",
         }}
       >
         <Icon
           name="heart"
-          size={18}
-          color={"#595959"}
+          size={15}
+          color={"#000"}
           style={{ alignSelf: "center" }}
         />
       </View>

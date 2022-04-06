@@ -72,14 +72,28 @@ const Seller = (props) => {
       ) : (
         <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
+      <View
+              style={{
+                height: 35,
+                width: 35,
+                backgroundColor: "#f2f2f2",
+                alignItems: "center",
+                borderRadius: 10,
+                justifyContent: "center",
+                elevation: 3,
+                marginStart: 5
+              }}
+            >
         <Icon onPress={() => props.navigation.navigate("Buyer")}
-        name="chevron-left" size={18} style={{top: 4}} />
+        name="chevron-left" size={14} style={{alignSelf: "center", marginStart: -2}} />
+        </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginEnd: 130
+            marginEnd: 130,
+            marginTop: 5
           }}
         >
           Toko Saya

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableWithoutFeedback, TextInput, } from "react-native";
+import { View, Text, TouchableWithoutFeedback, TextInput, Image} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { Avatar, Card, Divider, IconButton } from "react-native-paper";
 import NumericInput from "react-native-numeric-input";
@@ -127,14 +127,14 @@ const CartItem = (props) => {
         }}
       />
       <View style={{ flexDirection: "row" }}>
-        <Avatar.Image
+        <Image
           source={{
             uri:
               props.item.item.images.length > 0
                 ? props.item.item.images[0].downloadUrl
                 : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
           }}
-          size={55}
+          style={{borderRadius: 10, width: 60, height: 60}}
         />
         <Text
           style={{
@@ -153,8 +153,8 @@ const CartItem = (props) => {
           fontSize: 18,
           fontWeight: "700",
           color: "#000",
-          marginStart: 77,
-          marginTop: -20,
+          marginStart: 80,
+          marginTop: -25,
         }}
       >
         Rp {currencyIdrConverter(props.item.item.price, 0, ".", ",")}

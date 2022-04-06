@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, View } from "react-native";
-import { Text, Button } from "native-base";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { StyleSheet, View, Pressable } from "react-native";
+import { Text } from "native-base";
+import { currencyIdrConverter } from "../util/extensions";
 import Icon from "react-native-vector-icons/AntDesign";
 import Toast from "react-native-toast-message";
 import { AuthContext } from "../context/auth";
@@ -15,17 +15,17 @@ import {
 } from "../util/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 
-function ItemButtonOrder({item, isChatExists}) {
+const ItemButtonOrder = (props) => {
   const context = useContext(AuthContext);
   const navigation = useNavigation();
+  const { item, isChatExists } = props;
   const [amountItem, setAmountItem] = useState(1);
   const [errors, setErrors] = useState({});
   const [note, setNote] = useState("");
+  const [isSaved, setSave] = useState(false);
   const [values, setValues] = useState({
     note: "",
   });
-
-  // console.log("ini chat", isChatExists);
 
   const chat = {
     id: isChatExists.length > 0 ? isChatExists[0]._id : "new",
@@ -56,13 +56,8 @@ function ItemButtonOrder({item, isChatExists}) {
   };
 
   const [addToCart] = useMutation(ADD_TO_CART_MUTATION, {
-    variables: {
-      itemId: item.id,
-      isChecked: false,
-      amountItem: amountItem,
-      note: values.note,
-    },
     update(proxy, result) {
+      console.log("product added");
       const data = proxy.readQuery({
         query: FETCH_USER_CART_QUERY,
       });
@@ -73,12 +68,16 @@ function ItemButtonOrder({item, isChatExists}) {
           getUserCartItems: [result.data.addCartItem, ...data.getUserCartItems],
         },
       });
-
-      console.log("product added");
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      console.log(errors);
+      setSave(true);
+    },
+    variables: {
+      itemId: item.id,
+      isChecked: false,
+      amountItem: amountItem,
+      note: values.note,
     },
   });
 
@@ -107,46 +106,53 @@ function ItemButtonOrder({item, isChatExists}) {
 
   return (
     <View style={styles.bottomHeader}>
-      <Button
-        onPress={() => navigation.navigate("Chat", { chat, message })}
+      <View
         style={{
-          backgroundColor: "#fff",
-          borderRadius: 20,
-          borderColor: "#000",
-          width: 90,
-          justifyContent: "center",
-          alignSelf: "center",
-          marginStart: 15,
+          flexDirection: "column",
+          marginTop: 2,
+          marginStart: 20,
+          alignSelf: "flex-start",
         }}
       >
-        <Ionicons name="chatbox-ellipses" size={25} />
-      </Button>
-      <Button
+        <Text style={{ fontWeight: "bold", fontSize: 16, color: "#8c8c8c" }}>
+          Harga
+        </Text>
+        <Text style={{ fontWeight: "bold", fontSize: 22, marginTop: 1 }}>
+          Rp {currencyIdrConverter(props.item.price, 0, ".", ",")}
+        </Text>
+      </View>
+      <Pressable
         style={styles.btnCart}
         onPress={addItemCart}
         disabled={item.stock < 1}
       >
-        <Icon name="plus" size={16} style={{ color: "#fff" }} />
-        <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
-          Add To Cart
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            color: "#fff",
+            alignSelf: "center",
+          }}
+        >
+          Tambah Ke Bag
         </Text>
-      </Button>
+      </Pressable>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   btnCart: {
-    width: 220,
+    width: 155,
+    height: 48,
     backgroundColor: "#000",
-    alignSelf: "center",
     justifyContent: "center",
-    borderRadius: 20,
-    marginEnd: 15,
-    marginStart: 15,
+    borderRadius: 15,
+    flexDirection: "row",
+    marginTop: 2,
+    marginStart: "17%",
   },
   bottomHeader: {
-    height: 70,
     flexDirection: "row",
     justifyContent: "space-between",
   },

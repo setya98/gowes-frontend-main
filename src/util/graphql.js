@@ -233,6 +233,7 @@ export const FETCH_ITEM_REVIEWS = gql`
         name
       }
       images {
+        id
         downloadUrl
       }
       createdAt
@@ -1048,12 +1049,11 @@ export const ADD_REVIEW_MUTATION = gql`
       }
     ) {
       id
-      images {
-        id
-        downloadUrl
-      }
       score
       body
+      images {
+        downloadUrl
+      }
       createdAt
     }
   }

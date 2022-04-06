@@ -175,7 +175,7 @@ const EditProduct = (props) => {
         type: "success",
         text1: "Produk Berhasil Tersimpan",
       });
-      props.navigation.navigate("Seller");
+      props.navigation.navigate("Product Container");
     },
     onError(err) {
       console.log("error");
@@ -582,7 +582,7 @@ const EditProduct = (props) => {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <TouchableOpacity style={styles.commandButton} onPress={deleteAlert}>
-              <Text style={{ fontSize: 20, fontWeight: "bold", color: "#000" }}>
+              <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
                 Hapus
               </Text>
             </TouchableOpacity>
@@ -621,7 +621,7 @@ const styles = StyleSheet.create({
   commandButton: {
     padding: 12,
     borderRadius: 15,
-    backgroundColor: "#fff",
+    backgroundColor: "red",
     alignItems: "center",
     width: "40%",
     marginTop: 30,

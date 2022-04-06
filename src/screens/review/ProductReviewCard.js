@@ -30,10 +30,9 @@ const ProductReviewCard = (props) => {
       <Card style={styles.card}>
         <Card.Content>
           <View style={{ flexDirection: "row" }}>
-            <Avatar.Image
+            <Image
               source={{ uri: review.user.buyer.avatar }}
-              style={{ margin: 4 }}
-              size={40}
+              style={{ margin: 4, width: 35, height: 35, borderRadius: 8 }}
             />
             <Card.Title
               title={review.user.buyer.name}

@@ -6,7 +6,8 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  Image,
 } from "react-native";
 import { Text } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -23,7 +24,7 @@ import {
   FETCH_ITEM_SELLER_QUERY,
 } from "../../util/graphql";
 
-var { height } = Dimensions.get("window") 
+var { height } = Dimensions.get("window");
 
 const StoreSeller = (props) => {
   const context = useContext(AuthContext);
@@ -43,7 +44,6 @@ const StoreSeller = (props) => {
     return userReceiver;
   };
   console.log("chats", chats);
-
 
   const { loading, data: userData } = useQuery(FETCH_USER_QUERY, {
     variables: {
@@ -73,216 +73,259 @@ const StoreSeller = (props) => {
         />
       ) : (
         <SafeAreaView>
-          <View style={{backgroundColor: "#fff"}}>
-          <View style={styles.header}>
-            <FontAwesome
-              onPress={() => props.navigation.navigate("Buyer")}
-              name="chevron-left"
-              size={18}
-              style={{ top: 4 }}
-            />
-            <Text
+          <View style={{ backgroundColor: "#fff" }}>
+            <View style={styles.header}>
+            <View
               style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                letterSpacing: 0.3,
-                marginEnd: 130,
+                height: 35,
+                width: 35,
+                backgroundColor: "#f2f2f2",
+                alignItems: "center",
+                borderRadius: 10,
+                justifyContent: "center",
+                elevation: 3,
+                marginStart: 5
               }}
             >
-              Profil Toko
-            </Text>
-          </View>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-              paddingBottom: 190,
-            }}
-          >
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <View style={styles.ImageContainer}>
-                <Avatar.Image
-                  source={{ uri: currentUser.seller.avatar }}
-                  size={50}
-                  style={{ marginStart: 15, marginTop: 5 }}
-                />
-              </View>
-
-              <View
+              <FontAwesome
+                onPress={() => props.navigation.goBack()}
+                name="chevron-left"
+                size={14}
+                style={{ alignSelf: "center", marginStart: -2}}
+              />
+            </View>
+              <Text
                 style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  marginStart: 25,
-                  marginTop: 20,
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  letterSpacing: 0.3,
+                  marginEnd: 130,
+                  marginTop: 5
                 }}
               >
-                <View style={{ flexDirection: "column" }}>
+                Profil Toko
+              </Text>
+            </View>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingBottom: 190,
+                backgroundColor: "#f2f2f2",
+              }}
+            >
+              <View style={{ flexDirection: "row", marginTop: 15 }}>
+                <View style={styles.ImageContainer}>
+                  <Image
+                    source={{ uri: currentUser.seller.avatar }}
+                    style={{
+                      marginStart: 15,
+                      marginTop: 5,
+                      width: 60,
+                      height: 60,
+                      borderRadius: 15,
+                    }}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    marginStart: 25,
+                    marginTop: 22,
+                  }}
+                >
+                  <View style={{ flexDirection: "column" }}>
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        color: "#000",
+                        fontWeight: "700",
+                        letterSpacing: 0.6,
+                      }}
+                    >
+                      {currentUser.seller.username}
+                    </Text>
+                    <View style={{ flexDirection: "row", marginTop: 12 }}>
+                      <FontAwesome
+                        name="map-marker"
+                        color={"#8c8c8c"}
+                        size={14}
+                      />
+                      <Text
+                        style={{
+                          color: "#595959",
+                          fontWeight: "bold",
+                          marginStart: 7,
+                          marginTop: -2,
+                        }}
+                      >
+                        {currentUser.address.cityName}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={{ marginStart: 30, marginTop: 5 }}>
+                    <TouchableWithoutFeedback
+                      onPress={() =>
+                        props.navigation.navigate("Message Screen", {
+                          username: receiver(chats.users).seller.username,
+                          chatId: chats.id,
+                        })
+                      }
+                    >
+                      <View
+                        style={{
+                          height: 40,
+                          width: 68,
+                          backgroundColor: "#fff",
+                          borderRadius: 12,
+                          justifyContent: "center",
+                          elevation: 1,
+                        }}
+                      >
+                        <Text
+                          style={{
+                            marginStart: 10,
+                            fontSize: 14,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Chat
+                        </Text>
+                        <FontAwesome
+                          name="envelope"
+                          style={{
+                            color: "#000",
+                            alignSelf: "flex-end",
+                            marginEnd: 10,
+                            marginTop: -15,
+                          }}
+                          size={14}
+                        />
+                      </View>
+                    </TouchableWithoutFeedback>
+                  </View>
+                </View>
+              </View>
+
+              <View style={{ flexDirection: "row" }}>
+                <View
+                  style={{
+                    flexDirection: "column",
+                    marginStart: 50,
+                    marginTop: 30,
+                  }}
+                >
+                  <View style={{ flexDirection: "row", marginStart: -20 }}>
+                    <Icon name="door-open" size={16} color={"#595959"} />
+                    <Text
+                      style={{
+                        color: "#595959",
+                        fontWeight: "bold",
+                        marginStart: 10,
+                      }}
+                    >
+                      Buka sejak
+                    </Text>
+                  </View>
                   <Text
                     style={{
-                      fontSize: 20,
-                      color: "#000",
-                      fontWeight: "700",
-                      letterSpacing: 0.6,
+                      color: "#8c8c8c",
+                      fontWeight: "bold",
+                      marginStart: -20,
+                      marginTop: 10,
                     }}
                   >
-                    {currentUser.seller.username}
+                    {moment(currentUser.seller.createdAt).format("LL")}
                   </Text>
-                  <View style={{ flexDirection: "row", marginTop: 10 }}>
-                    <FontAwesome
-                      name="map-marker"
-                      color={"#8c8c8c"}
-                      size={14}
+                </View>
+                <Divider
+                  style={{
+                    width: 1,
+                    height: 45,
+                    backgroundColor: "#c9c7c7",
+                    marginStart: 45,
+                    marginTop: 32,
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: "column",
+                    marginStart: 55,
+                    marginTop: 30,
+                  }}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      marginStart: -20,
+                      marginTop: 3,
+                    }}
+                  >
+                    <Entypo
+                      name="info-with-circle"
+                      size={15}
+                      color={"#595959"}
                     />
                     <Text
                       style={{
                         color: "#595959",
                         fontWeight: "bold",
-                        marginStart: 7,
+                        marginStart: 10,
                         marginTop: -2,
                       }}
                     >
-                      {currentUser.address.cityName}
+                      Info
+                    </Text>
+                    <Text
+                      style={{
+                        color: "#8c8c8c",
+                        fontWeight: "bold",
+                        marginStart: -47,
+                        marginTop: 22,
+                      }}
+                    >
+                      {currentUser.seller.description}
                     </Text>
                   </View>
                 </View>
-
-                <View style={{ marginStart: 30, marginTop: 5 }}>
-                  <TouchableWithoutFeedback
-                    onPress={() =>
-                      props.navigation.navigate("Message Screen", {
-                        username: receiver(chats.users).seller.username,
-                        chatId: chats.id,
-                      })
-                    }
-                  >
-                    <View
-                      style={{
-                        height: 40,
-                        width: 40,
-                        backgroundColor: "#595959",
-                        borderRadius: 12,
-                        justifyContent: "center",
-                      }}
-                    >
-                      <FontAwesome
-                        name="envelope"
-                        style={{
-                          color: "#fff",
-                          alignSelf: "center",
-                        }}
-                        size={17}
-                      />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
               </View>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
               <View
                 style={{
-                  flexDirection: "column",
-                  marginStart: 50,
-                  marginTop: 30,
+                  marginTop: 15,
+                  backgroundColor: "#fff",
+                  borderRadius: 25,
                 }}
               >
-                <View style={{ flexDirection: "row", marginStart: -20 }}>
-                  <Icon name="door-open" size={16} color={"#595959"} />
-                  <Text
-                    style={{
-                      color: "#595959",
-                      fontWeight: "bold",
-                      marginStart: 10,
-                    }}
-                  >
-                    Buka sejak
-                  </Text>
-                </View>
                 <Text
                   style={{
-                    color: "#8c8c8c",
+                    backgroundColor: "#fff",
+                    fontSize: 20,
                     fontWeight: "bold",
-                    marginStart: -20,
-                    marginTop: 10,
+                    padding: 15,
+                    color: "#595959",
+                    borderTopRightRadius: 25,
+                    borderTopLeftRadius: 25,
                   }}
                 >
-                  {moment(currentUser.seller.createdAt).format("LL")}
+                  Daftar Produk
                 </Text>
-              </View>
-              <Divider
-                style={{
-                  width: 1,
-                  height: 45,
-                  backgroundColor: "#c9c7c7",
-                  marginStart: 45,
-                  marginTop: 32,
-                }}
-              />
-              <View
-                style={{
-                  flexDirection: "column",
-                  marginStart: 55,
-                  marginTop: 30,
-                }}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    marginStart: -20,
-                    marginTop: 3,
-                  }}
-                >
-                  <Entypo name="info-with-circle" size={15} color={"#595959"} />
-                  <Text
-                    style={{
-                      color: "#595959",
-                      fontWeight: "bold",
-                      marginStart: 10,
-                      marginTop: -2,
-                    }}
-                  >
-                    Info
-                  </Text>
-                  <Text
-                    style={{
-                      color: "#8c8c8c",
-                      fontWeight: "bold",
-                      marginStart: -47,
-                      marginTop: 22,
-                    }}
-                  >
-                    {currentUser.seller.description}
-                  </Text>
+                <View style={styles.listContainer}>
+                  {itemSeller &&
+                    itemSeller.map((item, index) => (
+                      <TouchableWithoutFeedback>
+                        <ProductList
+                          key={index}
+                          item={item}
+                          navigation={props.navigation}
+                          userId={userId}
+                        />
+                      </TouchableWithoutFeedback>
+                    ))}
                 </View>
               </View>
-            </View>
-
-            <View style={styles.detailContainer}>
-              <Text
-                style={{
-                  fontWeight: "bold",
-                  fontSize: 20,
-                  color: "#595959",
-                  marginStart: 20,
-                  marginTop: 25,
-                }}
-              >
-                Daftar Produk
-              </Text>
-              <View style={styles.listContainer}>
-                {itemSeller &&
-                  itemSeller.map((item, index) => (
-                    <TouchableWithoutFeedback>
-                      <ProductList
-                        key={index}
-                        item={item}
-                        navigation={props.navigation}
-                        userId={userId}
-                      />
-                    </TouchableWithoutFeedback>
-                  ))}
-              </View>
-            </View>
-          </ScrollView>
+            </ScrollView>
           </View>
         </SafeAreaView>
       )}
@@ -297,21 +340,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   ImageContainer: {
-    height: "10%",
     marginTop: 15,
-  },
-  detailContainer: {
-    elevation: 2,
-    marginTop: 25,
-    height: "100%",
-    borderRadius: 30,
   },
   listContainer: {
     height: "100%",
     alignSelf: "flex-start",
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 15
   },
 });
 

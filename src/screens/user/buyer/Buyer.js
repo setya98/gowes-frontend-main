@@ -8,15 +8,18 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   TouchableRipple,
-  Text
+  Text,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import StarIcon from "react-native-vector-icons/AntDesign";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Card, Avatar } from "react-native-paper";
+import { Card, Avatar, Divider } from "react-native-paper";
 import { useQuery } from "@apollo/react-hooks";
 import { AuthContext } from "../../../context/auth";
-import { FETCH_USER_QUERY, FETCH_SINGLE_ITEM_QUERY } from "../../../util/graphql";
+import {
+  FETCH_USER_QUERY,
+  FETCH_SINGLE_ITEM_QUERY,
+} from "../../../util/graphql";
 
 const Buyer = (props) => {
   const { user, logout } = useContext(AuthContext);
@@ -44,22 +47,22 @@ const Buyer = (props) => {
           color="#000"
         />
       ) : (
-        <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+        <SafeAreaView style={{ backgroundColor: "#fff" }}>
           <View style={styles.header}>
             <Text
               style={{
                 fontSize: 20,
                 fontWeight: "bold",
                 letterSpacing: 0.3,
+                marginTop: 5,
               }}
             >
               Akun
             </Text>
-            <Icon onPress={() => props.navigation.navigate("Chat")} name="envelope" size={20} />
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 190 }}
+            contentContainerStyle={{ paddingBottom: 190, backgroundColor: "#f2f2f2" }}
           >
             <View style={styles.ImageContainer}>
               <Avatar.Image
@@ -78,8 +81,9 @@ const Buyer = (props) => {
                   style={{
                     fontSize: 20,
                     fontWeight: "700",
-                    marginStart: 15,
+                    marginStart: 20,
                     letterSpacing: 0.6,
+                    marginTop: 5
                   }}
                 >
                   {currentUser.buyer.name}
@@ -94,7 +98,7 @@ const Buyer = (props) => {
                 borderRadius: 10,
                 alignSelf: "center",
                 marginTop: -28,
-                marginStart: -65,
+                marginStart: -60,
               }}
             >
               <View
@@ -107,7 +111,7 @@ const Buyer = (props) => {
                   style={{
                     alignSelf: "flex-start",
                     marginStart: 10,
-                    marginTop: 5,
+                    marginTop: 7,
                     color: "#595959",
                     fontWeight: "700",
                   }}
@@ -132,21 +136,32 @@ const Buyer = (props) => {
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate("Order")}
                 >
-                  <Image
-                    source={require("../../../assets/shopbag.png")}
-                    resizeMode="contain"
+                  <View
                     style={{
-                      width: 20,
-                      height: 20,
-                      top: 30,
-                      tintColor: "#595959",
+                      width: 35,
+                      height: 35,
+                      backgroundColor: "#f2f2f2",
+                      marginTop: 30,
+                      justifyContent: "center",
+                      borderRadius: 20,
                     }}
-                  />
+                  >
+                    <Image
+                      source={require("../../../assets/shopbag.png")}
+                      resizeMode="contain"
+                      style={{
+                        width: 17,
+                        height: 16,
+                        tintColor: "#595959",
+                        alignSelf: "center",
+                      }}
+                    />
+                  </View>
                   <Text
                     style={{
                       fontWeight: "500",
-                      top: 10,
-                      marginStart: 30,
+                      marginTop: -27,
+                      marginStart: 50,
                       color: "#595959",
                       fontSize: 18,
                     }}
@@ -155,7 +170,11 @@ const Buyer = (props) => {
                   </Text>
                   <Icon
                     name="chevron-right"
-                    style={{ top: -5, color: "#595959", marginStart: 300 }}
+                    style={{
+                      marginTop: -13,
+                      color: "#595959",
+                      marginStart: 298,
+                    }}
                   />
                 </TouchableOpacity>
               </View>
@@ -169,21 +188,30 @@ const Buyer = (props) => {
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate("Wishlist")}
                 >
+                  <View
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: "#f2f2f2",
+                      marginTop: 30,
+                      justifyContent: "center",
+                      borderRadius: 20,
+                    }}
+                  >
                   <Icon
                     name="heart"
-                    size={17}
+                    size={15}
                     style={{
-                      alignSelf: "flex-start",
-                      top: 30,
-                      marginStart: 3,
+                      alignSelf: "center",
                       color: "#595959",
                     }}
                   />
+                  </View>
                   <Text
                     style={{
                       fontWeight: "500",
-                      top: 10,
-                      marginStart: 32,
+                      marginTop: -27,
+                      marginStart: 52,
                       color: "#595959",
                       fontSize: 18,
                     }}
@@ -192,7 +220,7 @@ const Buyer = (props) => {
                   </Text>
                   <Icon
                     name="chevron-right"
-                    style={{ top: -5, color: "#595959", marginStart: 300 }}
+                    style={{ marginTop: -14, color: "#595959", marginStart: 298 }}
                   />
                 </TouchableOpacity>
               </View>
@@ -206,21 +234,30 @@ const Buyer = (props) => {
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate("Edit Buyer")}
                 >
+                  <View
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: "#f2f2f2",
+                      marginTop: 30,
+                      justifyContent: "center",
+                      borderRadius: 20,
+                    }}
+                  >
                   <Icon
                     name="address-book"
-                    size={17}
+                    size={14}
                     style={{
-                      alignSelf: "flex-start",
-                      top: 30,
-                      marginStart: 4,
+                      alignSelf: "center",
                       color: "#595959",
                     }}
                   />
+                  </View>
                   <Text
                     style={{
                       fontWeight: "500",
-                      top: 10,
-                      marginStart: 33,
+                      marginTop: -27,
+                      marginStart: 50,
                       color: "#595959",
                       fontSize: 18,
                     }}
@@ -229,7 +266,7 @@ const Buyer = (props) => {
                   </Text>
                   <Icon
                     name="chevron-right"
-                    style={{ top: -5, color: "#595959", marginStart: 300 }}
+                    style={{ marginTop: -13, color: "#595959", marginStart: 297 }}
                   />
                 </TouchableOpacity>
               </View>
@@ -241,24 +278,32 @@ const Buyer = (props) => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate("Add Review" )
-                }
+                  onPress={() => props.navigation.navigate("Add Review")}
                 >
+                  <View
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: "#f2f2f2",
+                      marginTop: 30,
+                      justifyContent: "center",
+                      borderRadius: 20,
+                    }}
+                  >
                   <StarIcon
                     name="star"
-                    size={17}
+                    size={15}
                     style={{
-                      alignSelf: "flex-start",
-                      top: 30,
-                      marginStart: 5,
+                      alignSelf: "center",
                       color: "#595959",
                     }}
                   />
+                  </View>
                   <Text
                     style={{
                       fontWeight: "500",
-                      top: 10,
-                      marginStart: 35,
+                      marginTop: -27,
+                      marginStart: 50,
                       color: "#595959",
                       fontSize: 18,
                     }}
@@ -267,7 +312,7 @@ const Buyer = (props) => {
                   </Text>
                   <Icon
                     name="chevron-right"
-                    style={{ top: -5, color: "#595959", marginStart: 300 }}
+                    style={{ marginTop: -13, color: "#595959", marginStart: 297 }}
                   />
                 </TouchableOpacity>
               </View>
@@ -279,12 +324,34 @@ const Buyer = (props) => {
                   screen: "Login",
                 });
               }}
-              style={{backgroundColor: "#000", borderRadius: 20, width: "75%", height: 45, alignSelf: "center", marginTop: 25, justifyContent: "center"}}
+              style={{
+                backgroundColor: "#000",
+                borderRadius: 20,
+                width: "75%",
+                height: 45,
+                alignSelf: "center",
+                marginTop: 25,
+                justifyContent: "center",
+              }}
             >
-              <View style={{flexDirection: "row", justifyContent: "center"}}>
-              <StarIcon name="logout" style={{color: "#fff", marginEnd: 10}} size={18}/>
-                <Text style={{fontSize: 18, color: "white", fontWeight: "bold", alignSelf: "center", marginTop: -2}}>Logout</Text>
-                </View>
+              <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                <StarIcon
+                  name="logout"
+                  style={{ color: "#fff", marginEnd: 10 }}
+                  size={18}
+                />
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: "white",
+                    fontWeight: "bold",
+                    alignSelf: "center",
+                    marginTop: -2,
+                  }}
+                >
+                  Logout
+                </Text>
+              </View>
             </TouchableOpacity>
           </ScrollView>
         </SafeAreaView>
@@ -295,24 +362,26 @@ const Buyer = (props) => {
 
 const styles = StyleSheet.create({
   header: {
-    margin: 15,
+    marginTop: 3,
+    marginBottom: 10,
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
-    justifyContent: "space-between",
+    backgroundColor: "#fff",
+    alignSelf: "center"
   },
   ImageContainer: {
     backgroundColor: "#f2f2f2",
     alignItems: "flex-start",
     flexDirection: "row",
     height: "15%",
+    marginTop: 15
   },
   detailContainer: {
     flexGrow: 1,
     backgroundColor: "#fff",
     elevation: 3,
     marginTop: 25,
-    height: 250,
-    borderRadius: 30,
+    height: 270,
+    borderRadius: 20,
   },
 });
 

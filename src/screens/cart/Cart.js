@@ -94,14 +94,15 @@ const Cart = (props) => {
                 onPress={() => props.navigation.goBack()}
                 name="close"
                 size={18}
-                style={{ top: 4 }}
+                style={{ marginTop: 6}}
               />
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: "bold",
                   letterSpacing: 0.3,
-                  marginStart: 130,
+                  marginTop: 5,
+                  marginStart: 135
                 }}
               >
                 Bag
@@ -161,7 +162,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     backgroundColor: "#fff",
-    marginTop: 10,
+    marginTop: 5,
     marginStart: 17,
   },
   emptyContainer: {
@@ -172,7 +173,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header: {
-    margin: 15,
+    marginTop: 3,
+    marginBottom: 10,
+    marginStart: 15,
     flexDirection: "row",
     backgroundColor: "#fff",
   },

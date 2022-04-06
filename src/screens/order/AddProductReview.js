@@ -26,7 +26,7 @@ import { useMutation } from "@apollo/react-hooks";
 import { connect } from "react-redux";
 import { storage } from "../../firebase";
 import { useForm } from "../../util/hooks";
-import { ADD_REVIEW_MUTATION } from "../../util/graphql";
+import { ADD_REVIEW_MUTATION, FETCH_ITEM_REVIEWS } from "../../util/graphql";
 
 import OrderCardDetail from "../../component/OrderCardDetail";
 
@@ -133,8 +133,17 @@ const AddProductReview = (props) => {
   }, [image]);
 
   const [addReviewProduct] = useMutation(ADD_REVIEW_MUTATION, {
-    update(_, { data: { addReview: reviewData } }) {
-      console.log("updated");
+    update(proxy, result) {
+      console.log("review added");
+      const data = proxy.readQuery({
+        query: FETCH_ITEM_REVIEWS,
+      });
+
+      proxy.writeQuery({
+        query: FETCH_ITEM_REVIEWS,
+        data: { getItems: [result.data.addReview, ...data.getItemReviews] },
+      });
+
       props.navigation.navigate("Buyer");
       Toast.show({
         topOffset: 30,
@@ -148,7 +157,6 @@ const AddProductReview = (props) => {
     variables: {
       body: values.body,
       score: parseInt(values.score)
-
     }
   });
 

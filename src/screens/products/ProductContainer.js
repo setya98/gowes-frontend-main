@@ -31,8 +31,6 @@ const ProductContainer = (props) => {
   const { loading, data, refetch } = useQuery(FETCH_ITEMS_QUERY);
   const { getItems: items } = data ? data : [];
 
-  // console.log("cari", productsFiltered)
-  
   useEffect(() => {
     setProducts(items);
     setProductsFiltered(items);
@@ -174,7 +172,12 @@ const ProductContainer = (props) => {
           <View>
             <Banner />
           </View>
-            <View>
+          <Text style={{fontWeight: "bold", fontSize: 20, marginStart: 25, marginTop: 10, letterSpacing: 0.1}}>Kategori</Text>
+            <View style={{marginTop: 10}}>
+              <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              >
               <ListItem
                 noBorder
                 style={{
@@ -184,57 +187,61 @@ const ProductContainer = (props) => {
               >
                 <Chip
                   textStyle={[
-                    styles.text,
-                    active == -1 ? styles.textActive : styles.textInactive,
+                    styles.text, styles.textActive,
                   ]}
                   style={[ styles.center,
                     active == -1 ? styles.active : styles.inactive]}
                   onPress={() => {
                     handleChip("All"), refetchProduct();
                   }}
+                  icon={require("../../assets/bicycle.png")}
+                  mode="outlined"
                 >
                   All
                 </Chip>
                 <Chip
                   textStyle={[
-                    styles.text,
-                    active == -1 ? styles.textActive : styles.textInactive,
-                  ]}
+                    styles.text, styles.textActive]}
                   style={[ styles.center,
                     active == -1 ? styles.active : styles.inactive]}
                   onPress={() => {
                     handleChip("Sparepart"), refetchProduct();
                   }}
+                  icon={require("../../assets/screw.png")}
+                  mode="outlined"
                 >
                   Sparepart
                 </Chip>
                 <Chip
                   textStyle={[
-                    styles.text,
-                    active == -1 ? styles.textActive : styles.textInactive,
+                    styles.text, styles.textActive
                   ]}
                   style={[ styles.center,
                     active == -1 ? styles.active : styles.inactive]}
                   onPress={() => {
                     handleChip("Accessories"), refetchProduct();
                   }}
+                  icon={require("../../assets/lock.png")}
+                  mode="outlined"
                 >
                   Accessories
                 </Chip>
                 <Chip
                   textStyle={[
-                    styles.text,
-                    active == -1 ? styles.textActive : styles.textInactive,
+                    styles.text, styles.textActive 
                   ]}
                   style={[ styles.center,
                     active == -1 ? styles.active : styles.inactive]}
                   onPress={() => {
                     handleChip("Apparel"), refetchProduct();
                   }}
+                  icon={require("../../assets/helmet.png")}
+                  mode="outlined"
                 >
                   Apparel
                 </Chip>
               </ListItem>
+              </ScrollView>
             </View>
           {!loading ? (
             productsCategory.length > 0 ? (
@@ -281,33 +288,26 @@ const styles = StyleSheet.create({
   item: {
     height: 55,
     borderRadius: 20,
-    marginStart: -15,
-    backgroundColor: "#f2f2f2",
+    marginStart: -10,
+    backgroundColor: "#fff",
   },
   text: {
     justifyContent: "center",
     alignItems: "center",
+    marginStart: 7,
   },
   textActive: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#8c8c8c",
-  },
-  textInactive: {
     fontSize: 16,
-    fontWeight: "500",
-    color: "#000"
+    color: "#595959",
   },
-  active: {
-    backgroundColor: "#fff",
-  },
-  inactive: {
-    backgroundColor: "#fff",
-  },
+  // active: {
+  //   backgroundColor: "#fff",
+  // },
   center: {
     justifyContent: "center",
     alignSelf: "center",
-    marginEnd: 5
+    marginEnd: 10,
+    padding: 2
   },
 });
 

@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Image,
-  RefreshControl,
   Dimensions
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -42,6 +41,7 @@ const Wishlist = (props) => {
               fontSize: 20,
               fontWeight: "bold",
               letterSpacing: 0.3,
+              marginTop: 5
             }}
           >
             Wishlist
@@ -120,9 +120,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     backgroundColor: "#fff",
     marginTop: 15,
+    marginBottom: "100%"
   },
   header: {
-    margin: 15,
+    marginTop: 3,
+    marginBottom: 10,
     flexDirection: "row",
     backgroundColor: "#fff",
     alignSelf: "center"

@@ -1,8 +1,7 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { View, Image, StyleSheet, Dimensions, Animated } from "react-native";
-import { useRef } from "react";
+import { View, Image, Text } from "react-native";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 
 // Stacks
@@ -10,8 +9,7 @@ import HomeNavigator from "../HomeNavigator";
 import CartNavigator from "../../cart/CartNavigator";
 import WishlistNavigator from "../../wishlist/WishlistNavigator";
 import UserNavigator from "../../user/UserNavigator";
-
-// import CartIcon from "../../../component/CartIcon";
+import CartIcon from "../../../component/CartIcon";
 
 const Tab = createBottomTabNavigator();
 
@@ -112,7 +110,7 @@ export default function Main({ navigation }) {
                     justifyContent: "center",
                   }}
                 >
-                  <Image
+                    <Image
                     source={require("../../../assets/bag.png")}
                     resizeMode="contain"
                     style={{
@@ -122,7 +120,8 @@ export default function Main({ navigation }) {
                     }}
                   />
                 </View>
-                {/* <CartIcon /> */}
+                <CartIcon />
+                {/* <BadgeIcon /> */}
               </View>
             ),
           })}
