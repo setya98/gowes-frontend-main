@@ -112,14 +112,26 @@ const EditItem = (props) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
+      <View
+          style={{
+            height: 35,
+            width: 35,
+            backgroundColor: "#000",
+            alignItems: "center",
+            borderRadius: 10,
+            justifyContent: "center",
+            elevation: 3,
+          }}
+        >
         <FontAwesome
           onPress={() => props.navigation.goBack()}
           name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
+          size={14}
+          style={{ marginStart: -2, color: "#fff" }}
         />
+        </View>
         <Text
           style={{
             fontSize: 20,

@@ -201,7 +201,9 @@ const OrderDetail = (props) => {
             marginBottom: "10%",
           }}
           mode="contained"
-          onPress={() => navigation.navigate("Add Product Review", {order: order})}
+          onPress={() =>
+            navigation.navigate("Add Product Review", { order: order })
+          }
         >
           <Text
             style={{
@@ -221,18 +223,31 @@ const OrderDetail = (props) => {
   return (
     <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
-        <FontAwesome
-          onPress={() => props.navigation.goBack()}
-          name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
-        />
+        <View
+          style={{
+            height: 35,
+            width: 35,
+            backgroundColor: "#000",
+            alignItems: "center",
+            borderRadius: 10,
+            justifyContent: "center",
+            elevation: 3,
+          }}
+        >
+          <FontAwesome
+            onPress={() => props.navigation.goBack()}
+            name="chevron-left"
+            size={14}
+            style={{ marginStart: -2, color: "#fff" }}
+          />
+        </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginStart: 100,
+            marginStart: 80,
+            marginTop: 5
           }}
         >
           Detail Pesanan

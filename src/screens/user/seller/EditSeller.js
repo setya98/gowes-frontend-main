@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
-  Alert,
+  Dimensions,
   Image,
   ImageBackground,
 } from "react-native";
@@ -27,6 +27,8 @@ import {
   FETCH_USER_QUERY,
   UPDATE_SELLER_PROFILE_MUTATION,
 } from "../../../util/graphql";
+
+var { height } = Dimensions.get("window");
 
 const EditSeller = (props) => {
   const { colors } = useTheme();
@@ -194,26 +196,45 @@ const EditSeller = (props) => {
   const fall = new Animated.Value(1);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
+      <View
+            style={{
+              height: 35,
+              width: 35,
+              backgroundColor: "#000",
+              alignItems: "center",
+              borderRadius: 10,
+              justifyContent: "center",
+              elevation: 3,
+              marginStart: 5,
+            }}
+          >
         <FontAwesome
           onPress={() => props.navigation.navigate("Seller")}
           name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
+          size={14}
+          style={{ alignSelf: "center", marginStart: -2, color: "#fff" }}
         />
+        </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginStart: 90
+            marginStart: 75,
+            marginTop: 5
           }}
         >
           Edit Profil Toko
         </Text>
       </View>
-      
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          backgroundColor: "#f2f2f2",
+        }}
+      >
         <BottomSheet
           ref={bottomSheet}
           snapPoints={[510, 0]}
@@ -228,6 +249,7 @@ const EditSeller = (props) => {
         <Animated.View
           style={{
             marginBottom: 20,
+            marginTop: 15,
             opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
           }}
         >
@@ -317,7 +339,7 @@ const EditSeller = (props) => {
         </View>
         
         </Animated.View>
-        
+        </ScrollView>
     </SafeAreaView>
   );
 };
@@ -326,7 +348,6 @@ const styles = StyleSheet.create({
   header: {
     margin: 15,
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
   },
   panelButtonTitle: {
     fontSize: 20,
@@ -347,7 +368,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: "#fff",
     marginTop: 25,
-    height: "100%",
+    height: height,
     borderRadius: 30,
   },
   panel: {

@@ -66,7 +66,7 @@ const ProductDetail = (props) => {
               style={{
                 height: 35,
                 width: 35,
-                backgroundColor: "#f2f2f2",
+                backgroundColor: "#000",
                 alignItems: "center",
                 borderRadius: 10,
                 justifyContent: "center",
@@ -78,7 +78,7 @@ const ProductDetail = (props) => {
                 onPress={() => props.navigation.goBack()}
                 name="chevron-left"
                 size={14}
-                style={{ alignSelf: "center", marginStart: -2}}
+                style={{ alignSelf: "center", marginStart: -2, color: "#fff"}}
               />
             </View>
             <View style={{marginTop: 5, marginBottom: 5}}>
@@ -207,7 +207,7 @@ const ProductDetail = (props) => {
                       style={{
                         height: 35,
                         width: 35,
-                        backgroundColor: "#f2f2f2",
+                        backgroundColor: "#000",
                         marginTop: -80,
                         borderRadius: 10,
                         justifyContent: "center",
@@ -217,7 +217,7 @@ const ProductDetail = (props) => {
                     >
                       <FontAwesome
                         name="chevron-right"
-                        style={{ alignSelf: "center" }}
+                        style={{ alignSelf: "center", color: "#fff" }}
                       />
                     </View>
                   </View>
@@ -448,12 +448,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   bottomHeader: {
-    height: 60,
+    height: 65,
     flexDirection: "row",
     backgroundColor: "#fff",
     justifyContent: "space-between",
-    marginTop: 10,
-    elevation: 1
+    marginTop: 15,
+    elevation: 1,
   },
   review: {
     marginTop: -22,

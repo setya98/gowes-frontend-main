@@ -32,11 +32,11 @@ export default function Main({ navigation }) {
             paddingTop: 8,
             paddingBottom: 8,
             height: 65,
-            elevation: 5,
             borderRadius: 20,
-            shadowColor: "#737575",
             shadowOpacity: 0.25,
             shadowRadius: 3.5,
+            backgroundColor: "#fff",
+            marginBottom: 1,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -80,7 +80,8 @@ export default function Main({ navigation }) {
                   style={{
                     width: 25,
                     height: 25,
-                    tintColor: focused ? "#000" : "#8c8c8c",
+                    tintColor: focused ? "#000" : "#b0b0b0",
+                    
                   }}
                 />
               </View>
@@ -116,7 +117,7 @@ export default function Main({ navigation }) {
                     style={{
                       width: 25,
                       height: 25,
-                      tintColor: focused ? "#000" : "#8c8c8c",
+                      tintColor: focused ? "#000" : "#b0b0b0",
                     }}
                   />
                 </View>
@@ -144,7 +145,7 @@ export default function Main({ navigation }) {
                   style={{
                     width: 23,
                     height: 25,
-                    tintColor: focused ? "#000" : "#8c8c8c",
+                    tintColor: focused ? "#000" : "#b0b0b0",
                   }}
                 />
               </View>
@@ -202,7 +203,7 @@ export default function Main({ navigation }) {
                   style={{
                     width: 25,
                     height: 25,
-                    tintColor: focused ? "#000" : "#8c8c8c",
+                    tintColor: focused ? "#000" : "#b0b0b0",
                   }}
                 />
               </View>

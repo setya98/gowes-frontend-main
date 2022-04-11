@@ -57,7 +57,7 @@ const ProductCard = (props) => {
           style={{
             height: 25,
             width: 25,
-            backgroundColor: "#f2f2f2",
+            backgroundColor: "#000",
             alignItems: "center",
             borderRadius: 7,
             justifyContent: "center",
@@ -71,7 +71,7 @@ const ProductCard = (props) => {
             onPress={() => navigation.goBack()}
             name="chevron-right"
             size={11}
-            style={{ alignSelf: "center" }}
+            style={{ alignSelf: "center", color: "#fff" }}
           />
         </View>
       </View>

@@ -40,7 +40,9 @@ const EditBuyer = (props) => {
   const [kotaName, setKotaName] = useState("");
   const [kotaId, setKotaId] = useState("");
   const [isKotaSet, setIsKota] = useState(false);
-  const [avatar, setAvatar] = useState("https://react.semantic-ui.com/images/avatar/large/molly.png");
+  const [avatar, setAvatar] = useState(
+    "https://react.semantic-ui.com/images/avatar/large/molly.png"
+  );
 
   const [isSaved, setSave] = useState(false);
 
@@ -85,7 +87,7 @@ const EditBuyer = (props) => {
       detail: currentUser.address.detail,
     };
   }
-  
+
   let { onChange, onSubmit, values } = useForm(updateUserProfile, userObj);
 
   // const [values, setValues] = useState({
@@ -193,7 +195,7 @@ const EditBuyer = (props) => {
   };
 
   function updateUserProfile() {
-    values.avatar = avatar
+    values.avatar = avatar;
     updateProfile();
   }
 
@@ -231,37 +233,37 @@ const EditBuyer = (props) => {
   return (
     <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
-      <View
-            style={{
-              height: 35,
-              width: 35,
-              backgroundColor: "#f2f2f2",
-              alignItems: "center",
-              borderRadius: 10,
-              justifyContent: "center",
-              elevation: 3,
-              marginStart: 5,
-            }}
-          >
-            <FontAwesome
-              onPress={() => props.navigation.goBack()}
-              name="chevron-left"
-              size={14}
-              style={{ alignSelf: "center", marginStart: -2 }}
-            />
-          </View>
-          <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "bold",
-              letterSpacing: 0.3,
-              marginEnd: 130,
-              marginTop: 5,
-            }}
-          >
-            Edit Profil
-          </Text>
+        <View
+          style={{
+            height: 35,
+            width: 35,
+            backgroundColor: "#000",
+            alignItems: "center",
+            borderRadius: 10,
+            justifyContent: "center",
+            elevation: 3,
+            marginStart: 5,
+          }}
+        >
+          <FontAwesome
+            onPress={() => props.navigation.goBack()}
+            name="chevron-left"
+            size={14}
+            style={{ alignSelf: "center", marginStart: -2, color: "#fff" }}
+          />
         </View>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: "bold",
+            letterSpacing: 0.3,
+            marginEnd: 130,
+            marginTop: 5,
+          }}
+        >
+          Edit Profil
+        </Text>
+      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
@@ -284,10 +286,10 @@ const EditBuyer = (props) => {
           style={{
             marginBottom: 20,
             opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-            marginTop: 15
+            marginTop: 15,
           }}
         >
-         <View style={{ alignItems: "center", marginBottom: 10 }}>
+          <View style={{ alignItems: "center", marginBottom: 10 }}>
             <TouchableOpacity onPress={() => bottomSheet.current.snapTo(0)}>
               <View
                 style={{
@@ -532,7 +534,7 @@ const styles = StyleSheet.create({
   header: {
     margin: 15,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   panelButtonTitle: {
     fontSize: 20,

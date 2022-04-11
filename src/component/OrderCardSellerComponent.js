@@ -33,9 +33,8 @@ function OrderCardSellerComponent(props) {
     >
       <Card.Content style={{ flexDirection: "row", marginBottom: 20, marginTop: -25 }}>
       <Left>
-        <Avatar.Image source={{ uri: order.user.buyer.avatar }}
-            size={22}
-            style={{ top: 30, backgroundColor: "#8c8c8c" }} />
+        <Image source={{ uri: order.user.buyer.avatar }}
+            style={{ top: 30, backgroundColor: "#8c8c8c", height: 22, width: 22, borderRadius: 5 }} />
           <Text style={{marginTop: 10, marginStart: 35, fontWeight:"bold", fontSize: 16}}>{order.user.buyer.name}</Text>
           <Text style={{color: "#8c8c8c", marginTop: 10}}>{moment(order.state.createdAt).format('lll')}</Text>
       </Left>

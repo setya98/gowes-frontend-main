@@ -7,11 +7,12 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  TouchableRipple,
+  Dimensions,
   Text,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import StarIcon from "react-native-vector-icons/AntDesign";
+import Ionicon from "react-native-vector-icons/Ionicons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Card, Avatar, Divider } from "react-native-paper";
 import { useQuery } from "@apollo/react-hooks";
@@ -20,6 +21,8 @@ import {
   FETCH_USER_QUERY,
   FETCH_SINGLE_ITEM_QUERY,
 } from "../../../util/graphql";
+
+var { height } = Dimensions.get("window");
 
 const Buyer = (props) => {
   const { user, logout } = useContext(AuthContext);
@@ -60,18 +63,15 @@ const Buyer = (props) => {
               Akun
             </Text>
           </View>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 190, backgroundColor: "#f2f2f2" }}
-          >
             <View style={styles.ImageContainer}>
-              <Avatar.Image
+              <Image
                 source={{ uri: currentUser.buyer.avatar }}
-                size={55}
                 style={{
                   marginStart: 15,
-                  marginTop: 5,
-                  backgroundColor: "#8c8c8c",
+                  marginTop: 25,
+                  height: 55,
+                  width: 55,
+                  borderRadius: 10
                 }}
               />
               <TouchableWithoutFeedback
@@ -83,7 +83,7 @@ const Buyer = (props) => {
                     fontWeight: "700",
                     marginStart: 20,
                     letterSpacing: 0.6,
-                    marginTop: 5
+                    marginTop: 25
                   }}
                 >
                   {currentUser.buyer.name}
@@ -97,7 +97,7 @@ const Buyer = (props) => {
                 height: 30,
                 borderRadius: 10,
                 alignSelf: "center",
-                marginTop: -28,
+                marginTop: -95,
                 marginStart: -60,
               }}
             >
@@ -316,44 +316,60 @@ const Buyer = (props) => {
                   />
                 </TouchableOpacity>
               </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => {
-                logout;
-                props.navigation.navigate("Authentication", {
-                  screen: "Login",
-                });
-              }}
-              style={{
-                backgroundColor: "#000",
-                borderRadius: 20,
-                width: "75%",
-                height: 45,
-                alignSelf: "center",
-                marginTop: 25,
-                justifyContent: "center",
-              }}
-            >
-              <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <StarIcon
-                  name="logout"
-                  style={{ color: "#fff", marginEnd: 10 }}
-                  size={18}
-                />
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: "white",
-                    fontWeight: "bold",
-                    alignSelf: "center",
-                    marginTop: -2,
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  paddingHorizontal: 20,
+                }}
+              >
+                <TouchableOpacity
+                  onPress={() => {
+                    logout;
+                    props.navigation.navigate("Authentication", {
+                      screen: "Login",
+                    });
                   }}
                 >
-                  Logout
-                </Text>
+                  <View
+                    style={{
+                      width: 35,
+                      height: 35,
+                      backgroundColor: "#f2f2f2",
+                      marginTop: 30,
+                      justifyContent: "center",
+                      borderRadius: 20,
+                    }}
+                  >
+                  <Ionicon
+                  name="md-log-out"
+                    size={19}
+                    style={{
+                      alignSelf: "center",
+                      color: "#595959",
+                      marginStart: 5
+                  }}
+                />
+                  </View>
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      marginTop: -27,
+                      marginStart: 50,
+                      color: "#595959",
+                      fontSize: 18,
+                    }}
+                  >
+                    Logout
+                  </Text>
+                  <Icon
+                    name="chevron-right"
+                    style={{ marginTop: -13, color: "#595959", marginStart: 297 }}
+                  />
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          </ScrollView>
+            </View>
+            
         </SafeAreaView>
       )}
     </>
@@ -363,25 +379,23 @@ const Buyer = (props) => {
 const styles = StyleSheet.create({
   header: {
     marginTop: 3,
-    marginBottom: 10,
     flexDirection: "row",
-    backgroundColor: "#fff",
-    alignSelf: "center"
+    alignSelf: "center",
+    marginBottom: 10,
   },
   ImageContainer: {
     backgroundColor: "#f2f2f2",
     alignItems: "flex-start",
     flexDirection: "row",
-    height: "15%",
-    marginTop: 15
+    height: "20%",
   },
   detailContainer: {
     flexGrow: 1,
     backgroundColor: "#fff",
     elevation: 3,
-    marginTop: 25,
-    height: 270,
-    borderRadius: 20,
+    height: height,
+    borderRadius: 30,
+    marginTop: 30
   },
 });
 

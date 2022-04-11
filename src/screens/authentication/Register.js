@@ -61,7 +61,7 @@ const Register = ({ navigation }) => {
         <Image
           source={require("../../assets/bicycle.png")}
           resizeMode="contain"
-          style={{ height: 75, width: 75 }}
+          style={{ height: 70, width: 70 }}
         />
         <Text style={{ fontSize: 40, fontWeight: "bold", marginStart: 10, marginTop: 35 }}>
           Gowes
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   btn: {
       backgroundColor: "#000",
       width: "75%",
-      borderRadius: 25,
+      borderRadius: 20,
       marginTop: 25,
       height: 55,
       alignSelf: "center",

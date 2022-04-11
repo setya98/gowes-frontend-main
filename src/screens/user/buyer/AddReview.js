@@ -132,7 +132,7 @@ const AddReview = (props) => {
             style={{
               height: 35,
               width: 35,
-              backgroundColor: "#f2f2f2",
+              backgroundColor: "#000",
               alignItems: "center",
               borderRadius: 10,
               justifyContent: "center",
@@ -144,7 +144,7 @@ const AddReview = (props) => {
               onPress={() => props.navigation.goBack()}
               name="chevron-left"
               size={14}
-              style={{ alignSelf: "center", marginStart: -2 }}
+              style={{ alignSelf: "center", marginStart: -2, color: "#fff" }}
             />
           </View>
           <Text
@@ -152,7 +152,7 @@ const AddReview = (props) => {
               fontSize: 20,
               fontWeight: "bold",
               letterSpacing: 0.3,
-              marginEnd: 120,
+              marginEnd: 110,
               marginTop: 5,
             }}
           >

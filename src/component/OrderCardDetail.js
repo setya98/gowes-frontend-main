@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Card, Avatar } from "react-native-paper";
 import { Left } from "native-base";
 import { currencyIdrConverter } from "../util/extensions";
@@ -11,15 +11,14 @@ function OrderCardDetail(props) {
   if (props.item) {
     OrderItemList = (
       <View>
-        <Card.Content style={{ flexDirection: "row", marginHorizontal: -10, marginVertical: 10 }}>
+        <Card.Content style={{ flexDirection: "row", marginVertical: 10 }}>
           <Left>
-            <Avatar.Image
+            <Image
               source={{ uri: props.item.images[0].downloadUrl }}
-              size={50}
-              style={{ margin: 10 }}
+              style={{ marginStart: 10, marginRight: -5, marginTop: -5, width: 65, height: 65, borderRadius: 10 }}
             />
           </Left>
-          <Left style={{marginStart: -140, marginTop: -15}}>
+          <Left style={{marginStart: -100, marginTop: -15}}>
             <Text style={{ fontSize: 18, fontWeight:"bold", color: "#595959" }}>{props.item.name}</Text>
             <Text style={{ fontSize: 14, fontWeight:"bold", color: "#8c8c8c", marginTop: 5 }}>
              Jumlah : {props.item.amountItem}
@@ -29,7 +28,7 @@ function OrderCardDetail(props) {
             </Text>
           </Left>
         </Card.Content>
-        <Left style={{ marginStart: -15, marginTop: -10, marginBottom: 5, flexDirection: "row" }}>
+        <Left style={{ marginStart: 10, marginTop: -10, marginBottom: 5, flexDirection: "row" }}>
             <Text style={{ fontSize: 18, fontWeight: "bold", color: "#000" }}>
               Rp {currencyIdrConverter(props.item.price, 0, ".", ",")}
             </Text>

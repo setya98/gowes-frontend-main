@@ -168,20 +168,34 @@ const AddProduct = (props) => {
   const fall = new Animated.Value(1);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
+      <View
+            style={{
+              height: 35,
+              width: 35,
+              backgroundColor: "#000",
+              alignItems: "center",
+              borderRadius: 10,
+              justifyContent: "center",
+              elevation: 3,
+              marginStart: 5,
+            }}
+          >
         <FontAwesome
           onPress={() => props.navigation.goBack()}
           name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
+          size={14}
+          style={{ alignSelf: "center", marginStart: -2, color: "#fff" }}
         />
+        </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginStart: 90,
+            marginStart: 75,
+            marginTop: 5
           }}
         >
           Tambah Produk
@@ -190,6 +204,7 @@ const AddProduct = (props) => {
       <KeyboardAvoidingView
         enabled={true}
         contentContainerStyle={styles.container}
+        style={{backgroundColor: "#f2f2f2"}}
       >
         <BottomSheet
           ref={bottomSheet}
@@ -203,7 +218,7 @@ const AddProduct = (props) => {
         />
         <Animated.ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: height }}
+          contentContainerStyle={{ paddingBottom: height, marginTop: 15 }}
           style={{
             opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
           }}
@@ -507,7 +522,6 @@ const styles = StyleSheet.create({
   header: {
     margin: 15,
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
   },
   panelButtonTitle: {
     fontSize: 20,

@@ -13,6 +13,7 @@ import { Text } from "native-base";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Entypo from "react-native-vector-icons/Entypo";
+import Ionicons from "react-native-vector-icons/Ionicons"
 import moment from "moment";
 import ProductList from "./ProductList";
 import { Avatar, Divider } from "react-native-paper";
@@ -79,7 +80,7 @@ const StoreSeller = (props) => {
               style={{
                 height: 35,
                 width: 35,
-                backgroundColor: "#f2f2f2",
+                backgroundColor: "#000",
                 alignItems: "center",
                 borderRadius: 10,
                 justifyContent: "center",
@@ -91,7 +92,7 @@ const StoreSeller = (props) => {
                 onPress={() => props.navigation.goBack()}
                 name="chevron-left"
                 size={14}
-                style={{ alignSelf: "center", marginStart: -2}}
+                style={{ alignSelf: "center", marginStart: -2, color: "#fff"}}
               />
             </View>
               <Text
@@ -193,8 +194,8 @@ const StoreSeller = (props) => {
                         >
                           Chat
                         </Text>
-                        <FontAwesome
-                          name="envelope"
+                        <Ionicons
+                          name="chatbubble-ellipses"
                           style={{
                             color: "#000",
                             alignSelf: "flex-end",

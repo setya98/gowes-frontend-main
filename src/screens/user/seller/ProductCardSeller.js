@@ -54,8 +54,8 @@ const ProductCardSeller = (props) => {
               style={{
                 height: 35,
                 flexDirection: "row",
-                borderRadius: 15,
-                marginBottom: 10,
+                borderRadius: 10,
+                marginTop: 5,
                 justifyContent: "center",
                 backgroundColor: "#000",
                 width: "100%",

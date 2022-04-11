@@ -11,7 +11,7 @@ import {
   Alert,
   ImageBackground,
   Picker,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
 } from "react-native";
 import { useTheme } from "react-native-paper";
 import { Text } from "native-base";
@@ -45,20 +45,20 @@ const EditProduct = (props) => {
   const [isSaved, setSave] = useState(false);
   const [image, setImage] = useState([]);
 
-  console.log("category", typeof(product.getItem.category))
+  console.log("category", typeof product.getItem.category);
   console.log("foto", props.photos);
 
   const deleteAlert = () =>
-  Alert.alert("Hapus Produk", "Kamu yakin ingin hapus produk?", [
-    {
-      text: "Batal",
-      onPress: () => null,
-    },
-    {
-      text: "Hapus",
-      onPress: () => itemDelete()
-    },
-  ]);
+    Alert.alert("Hapus Produk", "Kamu yakin ingin hapus produk?", [
+      {
+        text: "Batal",
+        onPress: () => null,
+      },
+      {
+        text: "Hapus",
+        onPress: () => itemDelete(),
+      },
+    ]);
 
   let itemObj;
 
@@ -88,11 +88,11 @@ const EditProduct = (props) => {
       length: 0,
       width: 0,
       height: 0,
-      itemId: itemId
+      itemId: itemId,
     };
   }
 
-  const { onChange, onSubmit, values } = useForm(editItem, itemObj)
+  const { onChange, onSubmit, values } = useForm(editItem, itemObj);
 
   // const [values, setValues] = useState({
   //   name: product.getItem.name,
@@ -203,8 +203,8 @@ const EditProduct = (props) => {
       (values.height = parseInt(values.height));
   }
 
-  function itemDelete(){
-    deleteItem()
+  function itemDelete() {
+    deleteItem();
   }
 
   const [deleteItem] = useMutation(DELETE_ITEM_MUTATION, {
@@ -221,7 +221,7 @@ const EditProduct = (props) => {
         },
       });
 
-      console.log("product deleted")
+      console.log("product deleted");
       Toast.show({
         topOffset: 30,
         type: "success",
@@ -264,20 +264,33 @@ const EditProduct = (props) => {
   const fall = new Animated.Value(1);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#f2f2f2" }}>
+    <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
-        <FontAwesome
-          onPress={() => props.navigation.goBack()}
-          name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
-        />
+        <View
+          style={{
+            height: 35,
+            width: 35,
+            backgroundColor: "#000",
+            alignItems: "center",
+            borderRadius: 10,
+            justifyContent: "center",
+            elevation: 3,
+          }}
+        >
+          <FontAwesome
+            onPress={() => props.navigation.goBack()}
+            name="chevron-left"
+            size={14}
+            style={{ marginStart: -2, color: "#fff" }}
+          />
+        </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginStart: 105,
+            marginStart: 85,
+            marginTop: 5
           }}
         >
           Edit Produk
@@ -299,7 +312,7 @@ const EditProduct = (props) => {
         />
         <Animated.ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: height }}
+          contentContainerStyle={{ paddingBottom: height, backgroundColor: "#f2f2f2" }}
           style={{
             opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
           }}
@@ -312,29 +325,39 @@ const EditProduct = (props) => {
                 marginTop: 15,
               }}
             >
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
-              <TouchableOpacity onPress={() => bottomSheet.current.snapTo(0)} style={{flexDirection: "row", marginStart: 25, marginEnd: 25}}>
-                {props.photos.map((pic) => (
-                  <View
-                    style={{
-                      height: 100,
-                      width: 100,
-                      borderRadius: 15,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginHorizontal: 5
-                    }}
-                  >
-                    <ImageBackground
-                      source={{
-                        uri: pic.uri,
+              <ScrollView
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+              >
+                <TouchableOpacity
+                  onPress={() => bottomSheet.current.snapTo(0)}
+                  style={{
+                    flexDirection: "row",
+                    marginStart: 25,
+                    marginEnd: 25,
+                  }}
+                >
+                  {props.photos.map((pic) => (
+                    <View
+                      style={{
+                        height: 100,
+                        width: 100,
+                        borderRadius: 15,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginHorizontal: 5,
                       }}
-                      style={{ height: 100, width: 100 }}
-                      imageStyle={{ borderRadius: 20 }}
-                    ></ImageBackground>
-                  </View>
-                ))}
-              </TouchableOpacity>
+                    >
+                      <ImageBackground
+                        source={{
+                          uri: pic.uri,
+                        }}
+                        style={{ height: 100, width: 100 }}
+                        imageStyle={{ borderRadius: 20 }}
+                      ></ImageBackground>
+                    </View>
+                  ))}
+                </TouchableOpacity>
               </ScrollView>
             </View>
           ) : (
@@ -342,6 +365,7 @@ const EditProduct = (props) => {
               style={{
                 alignItems: "center",
                 marginBottom: 15,
+                marginTop: 20
               }}
             >
               <TouchableOpacity onPress={() => bottomSheet.current.snapTo(0)}>
@@ -581,7 +605,10 @@ const EditProduct = (props) => {
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <TouchableOpacity style={styles.commandButton} onPress={deleteAlert}>
+            <TouchableOpacity
+              style={styles.commandButton}
+              onPress={deleteAlert}
+            >
               <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
                 Hapus
               </Text>
@@ -593,7 +620,7 @@ const EditProduct = (props) => {
               <Text style={styles.panelButtonTitle}>Simpan</Text>
             </TouchableOpacity>
           </View>
-          </Animated.ScrollView>
+        </Animated.ScrollView>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -603,7 +630,6 @@ const styles = StyleSheet.create({
   header: {
     margin: 15,
     flexDirection: "row",
-    backgroundColor: "#f2f2f2",
   },
   ImageContainer: {
     backgroundColor: "#fff",
@@ -761,6 +787,4 @@ const mapStateToProps = (state) => ({
   photos: state.imagePicker.photos,
 });
 
-export default connect(mapStateToProps, { uploadMultipleImage })(
-  EditProduct
-);
+export default connect(mapStateToProps, { uploadMultipleImage })(EditProduct);
