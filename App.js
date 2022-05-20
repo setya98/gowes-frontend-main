@@ -22,10 +22,11 @@ import MainNavigator from "./src/navigation/MainNavigator";
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs(['new NativeEventEmitter']);
+LogBox.ignoreLogs(['Require cycle:']);
 LogBox.ignoreLogs(['Setting a timer for a long period of time'])
 
 const httpLink = createHttpLink({
-  uri: "http://192.168.0.105:4000"
+  uri: "http://192.168.0.108:4000"
 });
 
 const authLink = setContext(async () => {

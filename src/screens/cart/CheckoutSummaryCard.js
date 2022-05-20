@@ -14,7 +14,7 @@ import { useLazyQuery } from "@apollo/client";
 
 const CheckoutSummaryCard = (props) => {
   const [subTotal, setSubTotal] = useState(0);
-  const [amount, setAmount] = useState(0);
+  const [amounts, setAmount] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
   const [isCourierExists, setCourierExists] = useState(false);
   const [midtransItemList, setMidtransItemList] = useState([]);
@@ -36,7 +36,7 @@ const CheckoutSummaryCard = (props) => {
   useEffect(() => {
     props.carts.forEach((cart) => {
       if (cart.cartItems[0].courier) {
-        shippingCostCounter += cart.cartItems[0].courier.amount;
+        shippingCostCounter += cart.cartItems[0].courier.amounts;
         // compare between previous value and next value
         isExistsCourierList = [
           ...isExistsCourierList,
@@ -46,7 +46,7 @@ const CheckoutSummaryCard = (props) => {
           ...courierItems,
           {
             id: "",
-            price: cart.cartItems[0].courier.amount,
+            price: cart.cartItems[0].courier.amounts,
             quantity: 1,
             name: `${cart.cartItems[0].courier.code} (${cart.cartItems[0].courier.service})`,
           },
@@ -195,6 +195,7 @@ const CheckoutSummaryCard = (props) => {
         >
           Rp {currencyIdrConverter(subTotal + shippingCost, 0, ".", ",")}
         </Text>
+        <Text>Item (x{amounts})</Text>
       </View>
       </Card.Content>
      <Card.Content>{pay()}</Card.Content>

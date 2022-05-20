@@ -21,15 +21,18 @@ import {
 import { Input } from "native-base";
 
 const CartItem = (props) => {
-  const [amountItem, setAmountItem] = useState(props.item.item.amountItem);
+  const [amountItem, setAmountItem] = useState(props.item.amountItem);
   const [errors, setErrors] = useState({});
   const [note, setNote] = useState(props.item.note);
   const [isOpen, setOpen] = useState(false)
   const [editAmount, setEditAmount] = useState(false);
 
+  console.log("bruh", props.item.amountItem)
+
   useEffect(() => {
     let carts = props.carts;
-    // console.log("cart items", carts[0].cartItems)
+    console.log("the cart" + carts)
+    
     let cartObj;
     let cartItemObj;
     let indexCartObj;
@@ -41,9 +44,9 @@ const CartItem = (props) => {
           if (cartItem.item.id === props.item.item.id) {
             indexCartItemObj = indexCartItem;
             cartItemObj = cartItem;
-            console.log("cartItem", cartItem)
             cartItemObj = { ...cartItemObj, amountItem: parseInt(amountItem) };
             cartItemObj = { ...cartItemObj, note: note };
+            console.log("haloo" + cartItem)
             return;
           }
         });
@@ -67,7 +70,7 @@ const CartItem = (props) => {
       itemId: props.item.item.id,
       amountItem: amountItem,
       note: note,
-      isChecked: props.item.isChecked,
+      isChecked: props.item.isChecked
     },
     update() {
       props.refetchCartQuery();
@@ -104,9 +107,6 @@ const CartItem = (props) => {
   if (editAmount) {
     addToCart();
   }
-
-  // console.log(NumericInput.value)
-  console.log("jumlah item", amountItem)
 
   return (
     <Card.Content

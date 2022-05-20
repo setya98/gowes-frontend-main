@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { Card, Divider } from "react-native-paper";
 import { Button } from "native-base";
+import { useNavigation } from "@react-navigation/native";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -13,6 +14,7 @@ import { CREATE_PAYMENT_QUERY } from "../../util/graphql";
 import { useLazyQuery } from "@apollo/client";
 
 const ItemSummaryCheckout = (props) => {
+  const navigation = useNavigation();
   const [subTotal, setSubTotal] = useState(0);
   const [amount, setAmount] = useState(0);
   const [shippingCost, setShippingCost] = useState(0);
@@ -87,7 +89,7 @@ const ItemSummaryCheckout = (props) => {
       const url = "https://app.sandbox.midtrans.com/snap/v1/transactions";
       let uData = {
         grossAmount: subTotal + shippingCost,
-        productDetails: midtransItemList,
+        itemDetails: midtransItemList,
         customerDetails: {
           firstName: props.carts[0].cartItems[0].user.buyer.name,
           email: props.carts[0].cartItems[0].user.email,
@@ -105,24 +107,30 @@ const ItemSummaryCheckout = (props) => {
       };
       dataTemp = uData;
 
+      function placeOrder() {
+        actionAddOrder();
+        setPaymentInput(dataTemp);
+        initiatePayment();
+      }
+
       summaryScreen = (
         <Button
           labelStyle={{ color: "white" }}
           disabled={false}
           onPress={() => {
-            actionAddOrder(), setPaymentInput(dataTemp), initiatePayment();
+            placeOrder();
           }}
           style={{
-            width: 100,
+            width: "80%",
             borderRadius: 15,
             justifyContent: "center",
-            height: 40,
-            alignSelf: "flex-end",
+            height: 45,
+            alignSelf: "center",
             backgroundColor: "#000",
-            marginBottom: 20,
+            marginTop: 25,
           }}
         >
-          <Text style={{ color: "#fff", fontSize: 16, fontWeight: "bold" }}>
+          <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
             Bayar
           </Text>
         </Button>
@@ -133,15 +141,15 @@ const ItemSummaryCheckout = (props) => {
           disabled={true}
           onClick={actionAddOrder}
           style={{
-            width: 100,
+            width: "80%",
             borderRadius: 15,
             justifyContent: "center",
-            height: 40,
-            alignSelf: "flex-end",
-            marginBottom: 20,
+            height: 45,
+            alignSelf: "center",
+            marginTop: 25,
           }}
         >
-          <Text style={{ color: "#595959", fontSize: 16, fontWeight: "bold" }}>
+          <Text style={{ color: "#595959", fontSize: 18, fontWeight: "bold" }}>
             Bayar
           </Text>
         </Button>
@@ -151,6 +159,7 @@ const ItemSummaryCheckout = (props) => {
   };
 
   const initiatePayment = () => {
+    console.log("initiate payment");
     createPayment();
   };
 
@@ -164,8 +173,7 @@ const ItemSummaryCheckout = (props) => {
       },
       onCompleted() {
         console.log(data, "tesss");
-
-        props.navigation.navigate("Midtrans", {
+        navigation.navigate("Midtrans", {
           midtransProps: data,
         });
       },
@@ -174,11 +182,27 @@ const ItemSummaryCheckout = (props) => {
 
   console.log("the data", data);
 
-  if (loading) return <Text>Loading ...</Text>;
+  if (loading)
+    return (
+      <View>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            marginTop: "50%",
+          }}
+        >
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+      </View>
+    );
 
   return (
-    <View style={{width: "90%", marginStart: 15}}>
-      <Card.Content style={{backgroundColor: "#fff", borderRadius: 20, elevation: 1}}>
+    <View style={{ width: "90%", marginStart: 15 }}>
+      <Card.Content
+        style={{ backgroundColor: "#fff", borderRadius: 20, elevation: 1 }}
+      >
         <Text style={styles.textHeader}>Total Belanja</Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text
@@ -220,13 +244,12 @@ const ItemSummaryCheckout = (props) => {
           </Text>
         </View>
       </Card.Content>
-     <Card.Content>{pay()}</Card.Content>
-        </View>
+      <Card.Content>{pay()}</Card.Content>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  
   textHeader: {
     fontSize: 18,
     fontWeight: "bold",
@@ -259,4 +282,6 @@ const mapStateToProps = (state) => ({
   isAddOrder: state.orders.isAddOrder,
 });
 
-export default connect(mapStateToProps, { checkoutItems, setAddOrder })(ItemSummaryCheckout);
+export default connect(mapStateToProps, { checkoutItems, setAddOrder })(
+  ItemSummaryCheckout
+);

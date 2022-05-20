@@ -119,7 +119,7 @@ const StoreSeller = (props) => {
                   <Image
                     source={{ uri: currentUser.seller.avatar }}
                     style={{
-                      marginStart: 15,
+                      marginStart: 20,
                       marginTop: 5,
                       width: 60,
                       height: 60,
@@ -214,7 +214,7 @@ const StoreSeller = (props) => {
                 <View
                   style={{
                     flexDirection: "column",
-                    marginStart: 50,
+                    marginStart: 55,
                     marginTop: 30,
                   }}
                 >
@@ -308,6 +308,8 @@ const StoreSeller = (props) => {
                     color: "#595959",
                     borderTopRightRadius: 25,
                     borderTopLeftRadius: 25,
+                    marginStart: 10,
+                    marginTop: 10
                   }}
                 >
                   Daftar Produk

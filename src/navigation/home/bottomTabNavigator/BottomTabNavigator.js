@@ -92,17 +92,7 @@ export default function Main({ navigation }) {
           name="Cart"
           component={CartNavigator}
           options={({ route }) => ({
-            tabBarVisible: ((route) => {
-              const routeName = getFocusedRouteNameFromRoute(route) ?? ""
-               if (routeName === "Checkout") {
-                return false
-               } if (routeName === "Midtrans") {
-                return false
-               } if (routeName === "Payment Checker") {
-                return false
-              } 
-              return true
-          })(route),
+            tabBarVisible: false,
             tabBarIcon: ({ focused }) => (
               <View>
                 <View

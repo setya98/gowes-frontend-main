@@ -283,7 +283,7 @@ const OrderDetailSeller = (props) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingBottom: height,
+          paddingBottom: 150,
           backgroundColor: "#f2f2f2",
         }}
       >
@@ -325,16 +325,27 @@ const OrderDetailSeller = (props) => {
           </View>
           <View style={{ flexDirection: "column", marginTop: 10 }}>
             <Text style={{ fontWeight: "700", color: "#8c8c8c" }}>Status:</Text>
+            <View
+            style={{
+              width: 100,
+              height: 30,
+              backgroundColor: "#F18c06",
+              borderRadius: 10,
+              justifyContent: "center",
+              marginTop: 5,
+            }}
+          >
             <Text
               style={{
                 fontWeight: "bold",
-                color: "#F18c06",
-                fontSize: 15,
-                marginTop: 5,
+                color: "#fff",
+                fontSize: 12,
+                alignSelf:"center"
               }}
             >
               {order.state.stateType}
             </Text>
+            </View>
           </View>
           <View style={{ flexDirection: "column", marginTop: 10 }}>
             <Text style={{ fontWeight: "700", color: "#8c8c8c" }}>

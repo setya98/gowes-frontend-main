@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import { Text } from "native-base";
 import { currencyIdrConverter } from "../util/extensions";
-import Icon from "react-native-vector-icons/AntDesign";
 import Toast from "react-native-toast-message";
 import { AuthContext } from "../context/auth";
 import { useNavigation } from "@react-navigation/native";
@@ -11,7 +10,6 @@ import {
   ADD_TO_CART_MUTATION,
   FETCH_CART_QUERY,
   FETCH_USER_CART_QUERY,
-  FETCH_CHATS_QUERY,
 } from "../util/graphql";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -58,6 +56,7 @@ const ItemButtonOrder = (props) => {
   const [addToCart] = useMutation(ADD_TO_CART_MUTATION, {
     update(proxy, result) {
       console.log("product added");
+      
       const data = proxy.readQuery({
         query: FETCH_USER_CART_QUERY,
       });

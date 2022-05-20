@@ -540,7 +540,7 @@ export const FETCH_CHAT_MESSAGES_QUERY = gql`
       id
       content
       sentAt
-      user
+      user 
       item {
         id
         name
@@ -1130,7 +1130,6 @@ export const CREATE_PAYMENT_QUERY = gql`
     createPayment(createPaymentInput: $createPaymentInput) {
       token
       redirect_url
-      orderId
     }
   }
 `;

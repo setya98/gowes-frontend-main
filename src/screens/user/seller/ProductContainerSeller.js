@@ -6,9 +6,9 @@ import {
   Dimensions,
   ScrollView,
   SafeAreaView,
-  ActivityIndicator, 
+  ActivityIndicator,
   Image,
-  StatusBar
+  StatusBar,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { FAB, Card } from "react-native-paper";
@@ -34,13 +34,10 @@ const ProductContainerSeller = (props) => {
 
   return (
     <>
-    <StatusBar
-      barStyle="dark-content"
-      backgroundColor='white'
-    />
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <SafeAreaView style={{ backgroundColor: "#fff" }}>
         <View style={styles.header}>
-        <View
+          <View
             style={{
               height: 35,
               width: 35,
@@ -52,12 +49,12 @@ const ProductContainerSeller = (props) => {
               marginStart: 5,
             }}
           >
-          <FontAwesome
-            onPress={() => props.navigation.goBack()}
-            name="chevron-left"
-            size={14}
-            style={{ alignSelf: "center", marginStart: -2, color: "#fff" }}
-          />
+            <FontAwesome
+              onPress={() => props.navigation.goBack()}
+              name="chevron-left"
+              size={14}
+              style={{ alignSelf: "center", marginStart: -2, color: "#fff" }}
+            />
           </View>
           <Text
             style={{
@@ -65,7 +62,7 @@ const ProductContainerSeller = (props) => {
               fontWeight: "bold",
               letterSpacing: 0.3,
               marginStart: 75,
-              marginTop: 5
+              marginTop: 5,
             }}
           >
             Daftar Produk
@@ -92,9 +89,7 @@ const ProductContainerSeller = (props) => {
             style={styles.fab}
             medium
             icon="plus"
-            onPress={() =>
-              props.navigation.navigate("Add Product")
-            }
+            onPress={() => props.navigation.navigate("Add Product")}
           />
         </View>
         {!loading ? (
@@ -133,7 +128,7 @@ const ProductContainerSeller = (props) => {
                   alignSelf: "center",
                   fontSize: 18,
                   fontWeight: "bold",
-                  marginBottom: "100%"
+                  marginBottom: "100%",
                 }}
               >
                 Kamu belum punya produk
@@ -160,7 +155,7 @@ const ProductContainerSeller = (props) => {
 
 const styles = StyleSheet.create({
   listContainer: {
-    height: "100%",
+    height: height,
     flexDirection: "row",
     alignItems: "flex-start",
     flexWrap: "wrap",

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Dimensions,
@@ -7,8 +7,9 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  Pressable,
 } from "react-native";
-import { Container, Text } from "native-base";
+import { Container, Text, Button } from "native-base";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import { connect } from "react-redux";
@@ -24,13 +25,15 @@ import CardGroup from "./CardGroup";
 var { height, width } = Dimensions.get("window");
 
 const Cart = (props) => {
-  const { loading, error, data, refetch } = useQuery(FETCH_USER_CART_QUERY);
+  const { loading, data, refetch } = useQuery(FETCH_USER_CART_QUERY);
   let { getUserCartItems: cartItems } = data ? data : [];
+
   var size = objectSize(cartItems);
+  console.log("size", size);
 
   useEffect(() => {
     if (size > 0) {
-      // console.log("size", size)
+      // console.log("size", size);
       let group = cartItems.reduce((r, a) => {
         r[a.item.user.id] = [...(r[a.item.user.id] || []), a];
         return r;
@@ -52,6 +55,7 @@ const Cart = (props) => {
 
   let cartScreen = (
     <Container style={styles.emptyContainer}>
+    <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Image
         source={require("../../assets/illus-cart.webp")}
         resizeMode="contain"
@@ -59,7 +63,7 @@ const Cart = (props) => {
           width: 250,
           height: 250,
           alignSelf: "center",
-          marginTop: "-50%",
+          marginTop: "-35%",
         }}
       />
       <Text style={{ fontSize: 18, fontWeight: "bold" }}>
@@ -75,6 +79,17 @@ const Cart = (props) => {
       >
         Belanja barang dulu, lalu tambah disini
       </Text>
+      <Pressable style={{borderRadius: 15, backgroundColor: "#000", marginTop: 25, alignSelf: "center", width: 155,
+    height: 48, justifyContent: "center"}} 
+      onPress={() => props.navigation.goBack()}
+      >
+        <Text style={{
+            fontSize: 16,
+            fontWeight: "bold",
+            color: "#fff",
+            alignSelf: "center",
+          }}>Belanja Dulu</Text>
+      </Pressable>
     </Container>
   );
 
@@ -90,19 +105,31 @@ const Cart = (props) => {
           <StatusBar barStyle="dark-content" backgroundColor="white" />
           <SafeAreaView style={{ backgroundColor: "#fff" }}>
             <View style={styles.header}>
-              <FontAwesome
-                onPress={() => props.navigation.goBack()}
-                name="close"
-                size={18}
-                style={{ marginTop: 6}}
-              />
+              <View
+                style={{
+                  height: 35,
+                  width: 35,
+                  backgroundColor: "#000",
+                  alignItems: "center",
+                  borderRadius: 10,
+                  justifyContent: "center",
+                  elevation: 3,
+                }}
+              >
+                <FontAwesome
+                  onPress={() => props.navigation.goBack()}
+                  name="close"
+                  size={15}
+                  style={{ color: "#fff" }}
+                />
+              </View>
               <Text
                 style={{
                   fontSize: 20,
                   fontWeight: "bold",
                   letterSpacing: 0.3,
+                  marginEnd: 155,
                   marginTop: 5,
-                  marginStart: 135
                 }}
               >
                 Bag
@@ -110,7 +137,10 @@ const Cart = (props) => {
             </View>
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: height }}
+              contentContainerStyle={{
+                paddingBottom: 190,
+                marginBottom: height,
+              }}
             >
               <View style={styles.listContainer}>
                 {group &&
@@ -126,15 +156,14 @@ const Cart = (props) => {
             <View
               style={{
                 position: "absolute",
-                marginStart: 20,
-                width: 320,
-                justifyContent: "space-between",
-                bottom: 105,
+                bottom: 60,
+                left: 0,
+                right: 0,
                 backgroundColor: "#fff",
-                borderTopRightRadius: 20,
-                borderTopLeftRadius: 20,
+                elevation: 0.6,
               }}
             >
+              {/* <Button onPress={dosomething}><Text>Oke</Text></Button> */}
               <ItemSummaryCart navigation={props.navigation} />
             </View>
           </SafeAreaView>
@@ -162,8 +191,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     backgroundColor: "#fff",
-    marginTop: 5,
-    marginStart: 17,
+    paddingStart: 15,
+    paddingBottom: 20,
   },
   emptyContainer: {
     height: height,
@@ -173,11 +202,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header: {
-    marginTop: 3,
-    marginBottom: 10,
-    marginStart: 15,
+    margin: 15,
     flexDirection: "row",
-    backgroundColor: "#fff",
+    justifyContent: "space-between",
   },
 });
 

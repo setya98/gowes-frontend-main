@@ -1,7 +1,11 @@
 import React, { useState, useContext, useCallback, useEffect } from "react";
-import { View, Image, StyleSheet, Text } from "react-native";
-import { GiftedChat, Bubble, Send, InputToolbar } from "react-native-gifted-chat";
-import FontAwesome from "react-native-vector-icons/FontAwesome5";
+import { ActivityIndicator, View } from "react-native";
+import {
+  GiftedChat,
+  Bubble,
+  Send,
+  InputToolbar,
+} from "react-native-gifted-chat";
 import Icon from "react-native-vector-icons/FontAwesome";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import { AuthContext } from "../../context/auth";
@@ -68,13 +72,13 @@ const Message = (props) => {
             width: 35,
             borderRadius: 10,
             justifyContent: "center",
-            marginTop: 5
+            marginTop: 5,
           }}
         >
           <Icon
             name="send"
             style={{ alignSelf: "center" }}
-            size={17}
+            size={15}
             color="#fff"
           />
         </View>
@@ -117,7 +121,7 @@ const Message = (props) => {
     );
   };
 
-  const customtInputToolbar = props => {
+  const customtInputToolbar = (props) => {
     return (
       <InputToolbar
         {...props}
@@ -134,6 +138,16 @@ const Message = (props) => {
     );
   };
 
+  const renderLoading = () => {
+    return(
+      <View>
+        <View style={{flex: 1, alignItems: "center", justifyContent: "center", marginTop: "50%"}}>
+          <ActivityIndicator size="large" color="#000" />
+        </View>
+      </View>
+    )
+  }
+
   const getMessageGiftedChat = () => {
     if (!loading && messages) {
       messagesList = messages.map((msg) => {
@@ -144,9 +158,8 @@ const Message = (props) => {
           createdAt: Date.parse(msg.sentAt),
           user: {
             _id: userId,
-            // name: msg.user.buyer.name,
-            avatar:
-              "https://react.semantic-ui.com/images/avatar/large/molly.png",
+            // name: "Buyer",
+            avatar: "https://react.semantic-ui.com/images/avatar/large/molly.png",
           },
         };
         return msgObj;
@@ -162,54 +175,21 @@ const Message = (props) => {
 
   return (
     <>
-      <View style={styles.header}>
-        <View
-          style={{
-            height: 30,
-            width: 30,
-            backgroundColor: "#000",
-            alignItems: "center",
-            borderRadius: 10,
-            justifyContent: "center",
-            elevation: 3,
-          }}
-        >
-          <FontAwesome
-            onPress={() => props.navigation.goBack()}
-            name="chevron-left"
-            size={13}
-            style={{ marginStart: -2, color: "#fff" }}
-          />
-        </View>
-        <Image
-          source={require("../../assets/man.png")}
-          style={{ width: 30, height: 30, marginStart: 35, marginTop: 2 }}
-        />
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-            letterSpacing: 0.3,
-            marginStart: 20,
-            marginTop: 3,
-          }}
-        >
-          {/* {chats.users.seller.username} */}
-          chat
-        </Text>
-      </View>
       <GiftedChat
         renderBubble={renderBubble}
         renderSend={renderSend}
-        messagesContainerStyle={{ backgroundColor: "#f2f2f2", paddingTop: 20, paddingBottom: 50, marginStart: 5, marginEnd: 5 }}
+        messagesContainerStyle={{
+          backgroundColor: "#f2f2f2",
+          paddingBottom: 50,
+          marginStart: 5,
+          marginEnd: 5,
+        }}
         messages={getMessageGiftedChat()}
         renderInputToolbar={customtInputToolbar}
         placeholder="Tulis pesan disini..."
         onSend={(messages) => onSend(messages)}
-        user={{
-          _id: 1,
-        }}
         alwaysShowSend
+        renderLoading={renderLoading}
         showUserAvatar
         scrollToBottom
         scrollToBottomComponent={scrollToBottomComponent}
@@ -217,13 +197,5 @@ const Message = (props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    flexDirection: "row",
-    backgroundColor: "#fff",
-    padding: 15,
-  },
-});
 
 export default Message;

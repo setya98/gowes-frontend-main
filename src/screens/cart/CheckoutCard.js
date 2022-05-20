@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Image, View, Dimensions } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 import { Card, Divider } from "react-native-paper";
 import { Text, ListItem, List, Right, Left } from "native-base";
 import SelectPicker from "react-native-form-select-picker";
-import DropDownPicker from "react-native-dropdown-picker";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 
 import PropTypes from "prop-types";
@@ -21,8 +20,6 @@ import {
   FETCH_USER_CART_QUERY,
 } from "../../util/graphql";
 import ItemCheckoutCard from "./ItemCheckoutCard";
-
-var { width } = Dimensions.get("window")
 
 const CheckoutCard = (props) => {
   const [updateUserCartCache, {}] = useLazyQuery(FETCH_USER_CART_QUERY);
@@ -239,7 +236,11 @@ const CheckoutCard = (props) => {
             }}
             placeholder="Pilih jasa pengiriman"
             placeholderStyle={{fontWeight: "600"}}
-            style={{width: "90%"}}
+            style={{width: "90%", padding: 13}}
+            titleText="Pilih Pengiriman"
+            titleTextStyle={{marginStart: 5}}
+            doneButtonText="Simpan"
+            doneButtonTextStyle={{fontWeight: "bold", color: "#fff", backgroundColor: "#000", width: 60, height: 30, paddingTop: 7, borderRadius: 10, marginTop: 5, marginBottom: 5, fontSize: 13}}
           >
             
             {Object.values(options).map((val) => (

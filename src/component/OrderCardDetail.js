@@ -13,12 +13,13 @@ function OrderCardDetail(props) {
       <View>
         <Card.Content style={{ flexDirection: "row", marginVertical: 10 }}>
           <Left>
-            <Image
+            <Avatar.Image
+              size={55}
               source={{ uri: props.item.images[0].downloadUrl }}
-              style={{ marginStart: 10, marginRight: -5, marginTop: -5, width: 65, height: 65, borderRadius: 10 }}
+              style={{marginTop: 5, marginStart: 5}}
             />
           </Left>
-          <Left style={{marginStart: -100, marginTop: -15}}>
+          <Left style={{marginStart: -120, marginTop: -10}}>
             <Text style={{ fontSize: 18, fontWeight:"bold", color: "#595959" }}>{props.item.name}</Text>
             <Text style={{ fontSize: 14, fontWeight:"bold", color: "#8c8c8c", marginTop: 5 }}>
              Jumlah : {props.item.amountItem}
@@ -28,7 +29,7 @@ function OrderCardDetail(props) {
             </Text>
           </Left>
         </Card.Content>
-        <Left style={{ marginStart: 10, marginTop: -10, marginBottom: 5, flexDirection: "row" }}>
+        <Left style={{ marginStart: -10, marginTop: 5, marginBottom: 5, flexDirection: "row" }}>
             <Text style={{ fontSize: 18, fontWeight: "bold", color: "#000" }}>
               Rp {currencyIdrConverter(props.item.price, 0, ".", ",")}
             </Text>

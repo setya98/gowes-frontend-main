@@ -10,6 +10,7 @@ const SearchedProduct = (props) => {
 
   return (
     <Content style={{ width: width }}>
+      <View>
       {productsFiltered.length > 0 ? (
         productsFiltered.map((item) => (
           <Card>
@@ -68,6 +69,7 @@ const SearchedProduct = (props) => {
           </Text>
         </View>
       )}
+      </View>
     </Content>
   );
 };

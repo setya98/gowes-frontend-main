@@ -76,7 +76,7 @@ const ProductReview = (props) => {
               style={{
                 height: 35,
                 width: 35,
-                backgroundColor: "#f2f2f2",
+                backgroundColor: "#000",
                 alignItems: "center",
                 borderRadius: 10,
                 justifyContent: "center",
@@ -88,7 +88,7 @@ const ProductReview = (props) => {
                 onPress={() => props.navigation.goBack()}
                 name="chevron-left"
                 size={14}
-                style={{ alignSelf: "center", marginStart: -2}}
+                style={{ alignSelf: "center", marginStart: -2, color: "#fff"}}
               />
             </View>
         <Text

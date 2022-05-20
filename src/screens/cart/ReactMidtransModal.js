@@ -7,10 +7,11 @@ import { connect } from "react-redux";
 import { setOrderIdsWillBePayed } from "../../../Redux/actions/orderAction";
 
 const ReactMidtransModal = (props) => {
-    console.log("wkwk", props);
   const midtrans = props.route.params.midtransProps.createPayment;
   const thisOrderId = props.route.params.midtransProps.createPayment.orderId;
   const [loading, setLoading] = useState(false);
+
+  console.log("midtrans", midtrans.redirect_url)
 
   const serverKey = "SB-Mid-server-Iqz0bFrQwfQ58ZdghJcUAhee";
   const base64Key = Base64.encode(serverKey);
@@ -18,7 +19,8 @@ const ReactMidtransModal = (props) => {
   async function getStatus() {
     // url for get the status of the transactions
     // this url is for sandbox
-    const url = `https://api.sandbox.midtrans.com/v2/${thisOrderId}/status`;
+    const url = midtrans.redirect_url;
+    
 
     // fetch data
     const response = await fetch(url, {
@@ -36,7 +38,7 @@ const ReactMidtransModal = (props) => {
     setLoading(true);
     getStatus().then((data) => {
       if ((data.status_code = 200)) {
-        console.log(data);
+        console.log(data, "status order");
         setLoading(false);
         props.navigation.navigate("Payment Checker", {
           getOrderIds: props.orderIds,
@@ -44,7 +46,7 @@ const ReactMidtransModal = (props) => {
       } else {
         console.log(data);
         setLoading(false);
-        alert("your order has not been paid");
+        alert("Transaksi kamu gagal");
       }
     });
   };
@@ -59,7 +61,7 @@ const ReactMidtransModal = (props) => {
       <TouchableOpacity
         onPress={checkPayment}
         style={{
-          backgroundColor: "#3366FF",
+          backgroundColor: "#000",
           padding: 20,
           paddingVertical: 15,
           flexDirection: "row",

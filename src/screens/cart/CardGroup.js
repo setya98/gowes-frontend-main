@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Image, Text, Dimensions } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import { Card, Checkbox } from "react-native-paper";
+import { Card } from "react-native-paper";
 
 import { useMutation } from "@apollo/client";
 import { EDIT_CHECKED_MUTATION } from "../../util/graphql";
@@ -11,18 +11,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { checkoutItems } from "../../../Redux/actions/orderAction";
 
-var { width } = Dimensions.get("window")
+var { width } = Dimensions.get("window");
 
 const CardGroup = (props) => {
   const [checked, setChecked] = useState(props.cartItem[0].isChecked);
   const [error, setErrors] = useState({});
+  console.log("disini", props);
 
   let itemIds = [];
   props.cartItem.forEach((cartItem) => {
     itemIds = [...itemIds, cartItem.item.id];
   });
-
-  console.log(props.cartItem);
 
   const [editCartItem] = useMutation(EDIT_CHECKED_MUTATION, {
     variables: { itemIds: itemIds, isChecked: checked ? false : true },
@@ -35,18 +34,17 @@ const CardGroup = (props) => {
     },
   });
 
-  const onChecked = (data) => {
-    console.log("onChecked called");
+  const onChecked = (sellerName) => {
     let carts = props.carts;
     if (carts.length > 0) {
-      console.log(carts[0].cartItem);
+      console.log("welkom" + carts[0].cartItem);
       if (
         carts.find(
-          (cart) => cart.cartItems[0].item.user.seller.username === data
+          (cart) => cart.cartItems[0].item.user.seller.username === sellerName
         )
       ) {
         carts = carts.filter(
-          (cart) => cart.user.seller.username !== data
+          (cart) => cart.user.seller.username !== sellerName
         );
       } else {
         const cart = {
@@ -83,10 +81,10 @@ const CardGroup = (props) => {
             fillColor="#000"
             style={{
               fontWeight: "bold",
-              paddingBottom: 15,
               marginStart: 3,
-              marginTop: 6,
-              flexDirection: "row",
+              marginTop: -2,
+              width: 30,
+              height: 30,
             }}
             onPress={() =>
               onChecked(props.cartItem[0].item.user.seller.username)
@@ -98,7 +96,7 @@ const CardGroup = (props) => {
             style={{
               width: 20,
               height: 20,
-              marginTop: -36,
+              marginTop: -26,
               marginStart: 40,
               flexDirection: "row",
             }}
