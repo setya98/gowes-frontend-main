@@ -19,7 +19,7 @@ const EditButtonItem = (props) => {
     },
   });
   if (data) {
-    console.log("data id", data.getItem.id);
+    // console.log("data id", data.getItem.id);
   }
 
   return (

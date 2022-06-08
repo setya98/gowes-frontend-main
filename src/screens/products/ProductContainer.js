@@ -160,7 +160,7 @@ const ProductContainer = (props) => {
       {focus == true ? (
         <SearchedProduct
           navigation={props.navigation}
-          productsFiltered={productsFiltered}
+          pencarian={productsFiltered}
           userId={context.user.id}
         />
       ) : (
@@ -257,7 +257,7 @@ const ProductContainer = (props) => {
                   ))}
               </View>
             ) : (
-              <Text>No Products found</Text>
+              <ActivityIndicator style={{justifyContent: "center", marginTop: 30}} size="large" color="#000" />
             )
           ) : (
             <ActivityIndicator style={{justifyContent: "center", marginTop: 30}} size="large" color="#000" />

@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -12,6 +12,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useTheme } from "react-native-paper";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { Button } from "native-base";
+import { CommonActions } from "@react-navigation/native";
 import { useMutation } from "@apollo/react-hooks";
 import { REGISTER_USER } from "../../util/graphql";
 import { List } from "react-native-paper";
@@ -34,9 +35,15 @@ const Register = ({ navigation }) => {
 
   const [register, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data: { register: userData } }) {
-      console.log("succeeded register - userData: ", userData);
-      navigation.navigate(
-        "Login"
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: "Login"
+            }
+          ]
+        })
       )
       Toast.show({
         topOffset: 30,

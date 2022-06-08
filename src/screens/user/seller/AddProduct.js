@@ -37,7 +37,7 @@ const AddProduct = (props) => {
   const [isSaved, setSave] = useState(false);
   const [image, setImage] = useState([]);
 
-  console.log("foto", props.photos);
+  // console.log("foto", props.photos);
 
   const { onChange, onSubmit, values } = useForm(addItem, {
     name: "",
@@ -69,7 +69,6 @@ const AddProduct = (props) => {
             .child(imageName)
             .getDownloadURL()
             .then((url) => {
-              // setImages(url);
               setImage((img) => [...img, url]);
               console.log("img url", url);
             });
@@ -88,11 +87,15 @@ const AddProduct = (props) => {
         });
       });
       values.images = downloadUrlImages;
+      console.log("foto produk", values.images)
       submitItem();
     }
   }, [image]);
 
   const [submitItem] = useMutation(ADD_ITEM_MUTATION, {
+    refetchQueries: [{
+      query: FETCH_ITEMS_QUERY
+    }],
     update(proxy, result) {
       console.log("product added");
       const data = proxy.readQuery({
@@ -104,7 +107,7 @@ const AddProduct = (props) => {
         data: { getItems: [result.data.addItem, ...data.getItems] },
       });
 
-      props.navigation.navigate("Seller");
+      props.navigation.dispatch(CommonActions.goBack());
       Toast.show({
         topOffset: 30,
         type: "success",
@@ -128,7 +131,7 @@ const AddProduct = (props) => {
           console.log(error);
         });
     });
-    (values.price = parseInt(values.price)),
+      (values.price = parseInt(values.price)),
       (values.stock = parseInt(values.stock)),
       (values.weight = parseInt(values.weight)),
       (values.length = parseInt(values.length)),

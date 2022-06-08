@@ -6,6 +6,7 @@ import Checkout from "../../screens/cart/Checkout";
 import MidtransPayment from "../../screens/cart/MidtransPayment";
 import ReactMidtransModal from "../../screens/cart/ReactMidtransModal"
 import ProductContainer from "../../screens/products/ProductContainer"
+import Buyer from "../../screens/user/buyer/Buyer"
 
 const Stack = createStackNavigator()
 
@@ -35,6 +36,11 @@ export default function CartNavigator({ navigation }) {
             <Stack.Screen
                 name='Product Container'
                 component={ProductContainer}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name='Buyer'
+                component={Buyer}
                 options={{ headerShown: false }}
             />
         </Stack.Navigator>

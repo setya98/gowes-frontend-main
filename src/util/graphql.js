@@ -1038,20 +1038,19 @@ export const ADD_REVIEW_MUTATION = gql`
     $score: Int!
     $body: String!
     $itemId: ID!
-    $images: [ImageInput]!
   ) {
     addReview(
       addReviewInput: {
         score: $score
         body: $body
         itemId: $itemId
-        images: $images
       }
     ) {
       id
       score
       body
       images {
+        id
         downloadUrl
       }
       createdAt

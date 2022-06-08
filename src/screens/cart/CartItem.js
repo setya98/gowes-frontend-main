@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableWithoutFeedback, TextInput, Image} from "react-native";
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  TextInput,
+  Image,
+  ToastAndroid
+} from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome5";
 import { Avatar, Card, Divider, IconButton } from "react-native-paper";
 import NumericInput from "react-native-numeric-input";
 import { currencyIdrConverter } from "../../util/extensions";
 import Toast from "react-native-toast-message";
-import Icon from "react-native-vector-icons/Entypo"
-import Entypo from "react-native-vector-icons/Entypo"
+import Icon from "react-native-vector-icons/Entypo";
+import Entypo from "react-native-vector-icons/Entypo";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -24,15 +31,19 @@ const CartItem = (props) => {
   const [amountItem, setAmountItem] = useState(props.item.amountItem);
   const [errors, setErrors] = useState({});
   const [note, setNote] = useState(props.item.note);
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
   const [editAmount, setEditAmount] = useState(false);
 
-  console.log("bruh", props.item.amountItem)
+  function showToast() {
+    ToastAndroid.show('Stok produk yang anda pilih mencapai maksimal', ToastAndroid.SHORT);
+  }
+
+  // console.log("bruh", props.item.amountItem)
 
   useEffect(() => {
     let carts = props.carts;
-    console.log("the cart" + carts)
-    
+    // console.log("the cart" + carts)
+
     let cartObj;
     let cartItemObj;
     let indexCartObj;
@@ -46,7 +57,7 @@ const CartItem = (props) => {
             cartItemObj = cartItem;
             cartItemObj = { ...cartItemObj, amountItem: parseInt(amountItem) };
             cartItemObj = { ...cartItemObj, note: note };
-            console.log("haloo" + cartItem)
+            // console.log("haloo" + cartItem)
             return;
           }
         });
@@ -59,6 +70,11 @@ const CartItem = (props) => {
   }, [amountItem]);
 
   const [deleteItemCart] = useMutation(DELETE_CART_ITEM_MUTATION, {
+    refetchQueries: [
+      {
+        query: FETCH_USER_CART_QUERY,
+      },
+    ],
     update() {
       props.refetchCartQuery();
     },
@@ -66,11 +82,16 @@ const CartItem = (props) => {
   });
 
   const [addToCart] = useMutation(EDIT_CART_MUTATION, {
+    refetchQueries: [
+      {
+        query: FETCH_USER_CART_QUERY,
+      },
+    ],
     variables: {
       itemId: props.item.item.id,
       amountItem: amountItem,
       note: note,
-      isChecked: props.item.isChecked
+      isChecked: props.item.isChecked,
     },
     update() {
       props.refetchCartQuery();
@@ -78,7 +99,7 @@ const CartItem = (props) => {
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      console.log(errors);
+      // console.log(errors);
     },
   });
 
@@ -92,16 +113,16 @@ const CartItem = (props) => {
   }
 
   function editCart() {
-    addToCart()
-    setOpen(false)
+    addToCart();
+    setOpen(false);
   }
   function plusButton() {
     setAmountItem(amountItem + 1);
-    setEditAmount(true)
+    setEditAmount(true);
   }
   function minusButton() {
     setAmountItem(amountItem - 1);
-    setEditAmount(true)
+    setEditAmount(true);
   }
 
   if (editAmount) {
@@ -134,7 +155,7 @@ const CartItem = (props) => {
                 ? props.item.item.images[0].downloadUrl
                 : "https://cdn.pixabay.com/photo/2012/04/01/17/29/box-23649_960_720.png",
           }}
-          style={{borderRadius: 10, width: 60, height: 60}}
+          style={{ borderRadius: 10, width: 60, height: 60 }}
         />
         <Text
           style={{
@@ -159,7 +180,6 @@ const CartItem = (props) => {
       >
         Rp {currencyIdrConverter(props.item.item.price, 0, ".", ",")}
       </Text>
-
       <NumericInput
         value={amountItem}
         onChange={(val) => {
@@ -215,28 +235,68 @@ const CartItem = (props) => {
         />
       </TouchableWithoutFeedback>
       {isOpen ? (
-        <View style={{flexDirection:"row", borderColor: "#595959", width: 155, height: 25, marginTop: -20, borderRadius: 10, borderStyle: "dashed", borderWidth: 1, marginStart: -5}}>
-         <TextInput 
-         name="note"
-         placeholder="Tulis catatan"
-         value={note}
-         onChangeText={(val) => setNote(val)}
-         style={{ marginTop: -1, fontSize: 15, width: 80, marginStart: 10
-        }}
-         />
-         <Entypo onPress={editCart} name="check" size={16} style={{marginTop: 2, marginStart: 40}}/>
-         </View>
+        <View
+          style={{
+            flexDirection: "row",
+            borderColor: "#595959",
+            width: 155,
+            height: 25,
+            marginTop: -20,
+            borderRadius: 10,
+            borderStyle: "dashed",
+            borderWidth: 1,
+            marginStart: -5,
+          }}
+        >
+          <TextInput
+            name="note"
+            placeholder="Tulis catatan"
+            value={note}
+            onChangeText={(val) => setNote(val)}
+            style={{ marginTop: -1, fontSize: 15, width: 80, marginStart: 10 }}
+          />
+          <Entypo
+            onPress={editCart}
+            name="check"
+            size={16}
+            style={{ marginTop: 2, marginStart: 40 }}
+          />
+        </View>
       ) : note !== "" ? (
         <>
-        <View style={{flexDirection: "row", width: 140, marginStart: -3}}>
-          <Icon onPress={() => setOpen(true)} name="edit" size={16} style={{marginTop: -15, color: "#595959"}} />
-          <Text style={{fontSize: 15, marginStart: 7, marginTop: -17, color: "#595959", }}>{note}</Text>
+          <View style={{ flexDirection: "row", width: 140, marginStart: -3 }}>
+            <Icon
+              onPress={() => setOpen(true)}
+              name="edit"
+              size={16}
+              style={{ marginTop: -15, color: "#595959" }}
+            />
+            <Text
+              style={{
+                fontSize: 15,
+                marginStart: 7,
+                marginTop: -17,
+                color: "#595959",
+              }}
+            >
+              {note}
+            </Text>
           </View>
         </>
       ) : (
-      <Icon onPress={() => setOpen(true)} name="edit" size={14} style={{marginTop: -15, color: "#8c8c8c", marginStart: -3, width: 140}} >
-      <Text style={{fontSize: 11, color: "#8c8c8c"}}>Tulis Catatan</Text>
-      </Icon>
+        <Icon
+          onPress={() => setOpen(true)}
+          name="edit"
+          size={14}
+          style={{
+            marginTop: -15,
+            color: "#8c8c8c",
+            marginStart: -3,
+            width: 140,
+          }}
+        >
+          <Text style={{ fontSize: 11, color: "#8c8c8c" }}>Tulis Catatan</Text>
+        </Icon>
       )}
     </Card.Content>
   );

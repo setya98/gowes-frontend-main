@@ -1,9 +1,8 @@
 import React from "react";
 import { Text, Dimensions, StyleSheet, Image, Pressable } from "react-native";
-import { Button } from "react-native-paper";
 import { Container } from "native-base";
 
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { connect } from "react-redux";
 import { setOrderIdsWillBePaid } from "../../../Redux/actions/orderAction";
 
@@ -15,9 +14,10 @@ const MidtransPayment = (props) => {
 
   const redirectToHomeScreen = () => {
     navigation.reset({
-      index: 0,
-      routes: [{name: 'Product Container'}]
-    })
+        index: 0,
+        routes: [{name: 'Cart'}]
+      }
+    )
   };
 
   return (
@@ -43,7 +43,7 @@ const MidtransPayment = (props) => {
           marginTop: 15,
         }}
       >
-        Yuk pesan barang yang kamu ingin
+        Yuk beli lagi barang yang kamu pengen
       </Text>
       <Pressable
         style={{
@@ -65,12 +65,9 @@ const MidtransPayment = (props) => {
             alignSelf: "center",
           }}
         >
-          Belanja Lagi
+          Pergi ke Bag
         </Text>
       </Pressable>
-      {/* <Button mode="contained" onPress={redirectToHomeScreen}>
-        Back to homescreen
-      </Button> */}
     </Container>
   );
 };

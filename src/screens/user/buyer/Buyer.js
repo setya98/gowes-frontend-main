@@ -15,6 +15,7 @@ import StarIcon from "react-native-vector-icons/AntDesign";
 import Ionicon from "react-native-vector-icons/Ionicons";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Card, Avatar, Divider } from "react-native-paper";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { useQuery } from "@apollo/react-hooks";
 import { AuthContext } from "../../../context/auth";
 import {
@@ -26,6 +27,7 @@ var { height } = Dimensions.get("window");
 
 const Buyer = (props) => {
   const { user, logout } = useContext(AuthContext);
+  const navigation = useNavigation()
 
   const { loading, data: data } = useQuery(FETCH_USER_QUERY, {
     variables: {
@@ -326,9 +328,17 @@ const Buyer = (props) => {
                 <TouchableOpacity
                   onPress={() => {
                     logout;
-                    props.navigation.navigate("Authentication", {
-                      screen: "Login",
-                    });
+                    navigation.dispatch(
+                      CommonActions.reset({
+                        index: 0,
+                        routes: [
+                          {
+                            name: "Authentication",
+                            params: { screen: "Login" }
+                          }
+                        ]
+                      })
+                    )
                   }}
                 >
                   <View

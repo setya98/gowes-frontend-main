@@ -31,7 +31,6 @@ const ItemSummaryCheckout = (props) => {
   let dataTemp;
 
   function actionAddOrder() {
-    console.log("actionAddOrder run");
     props.setAddOrder(true);
   }
 
@@ -81,6 +80,7 @@ const ItemSummaryCheckout = (props) => {
     setSubTotal(total);
     setCourierExists(courierExists);
     setMidtransItemList(productItems.concat(courierItems));
+    console.log("checkout counter", amountCounter)
   }, [props.isChange]);
 
   const pay = () => {
@@ -159,7 +159,6 @@ const ItemSummaryCheckout = (props) => {
   };
 
   const initiatePayment = () => {
-    console.log("initiate payment");
     createPayment();
   };
 
@@ -172,15 +171,13 @@ const ItemSummaryCheckout = (props) => {
         createPaymentInput: paymentInput,
       },
       onCompleted() {
-        console.log(data, "tesss");
+        // console.log(data, "tesss");
         navigation.navigate("Midtrans", {
           midtransProps: data,
         });
       },
     }
   );
-
-  console.log("the data", data);
 
   if (loading)
     return (
@@ -190,7 +187,7 @@ const ItemSummaryCheckout = (props) => {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            marginTop: "50%",
+            marginTop: "100%",
           }}
         >
           <ActivityIndicator size="large" color="#000" />

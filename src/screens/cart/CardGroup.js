@@ -4,7 +4,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Card } from "react-native-paper";
 
 import { useMutation } from "@apollo/client";
-import { EDIT_CHECKED_MUTATION } from "../../util/graphql";
+import { EDIT_CHECKED_MUTATION, FETCH_USER_CART_QUERY } from "../../util/graphql";
 import CartItem from "./CartItem";
 
 import PropTypes from "prop-types";
@@ -16,7 +16,7 @@ var { width } = Dimensions.get("window");
 const CardGroup = (props) => {
   const [checked, setChecked] = useState(props.cartItem[0].isChecked);
   const [error, setErrors] = useState({});
-  console.log("disini", props);
+  // console.log("disini", props);
 
   let itemIds = [];
   props.cartItem.forEach((cartItem) => {
@@ -24,20 +24,23 @@ const CardGroup = (props) => {
   });
 
   const [editCartItem] = useMutation(EDIT_CHECKED_MUTATION, {
+    refetchQueries: [{
+      query: FETCH_USER_CART_QUERY
+    }],
     variables: { itemIds: itemIds, isChecked: checked ? false : true },
     update() {
       props.refetchCartQuery();
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      console.log(error);
+      // console.log(error);
     },
   });
 
   const onChecked = (sellerName) => {
     let carts = props.carts;
     if (carts.length > 0) {
-      console.log("welkom" + carts[0].cartItem);
+      // console.log("welkom" + carts[0].cartItem);
       if (
         carts.find(
           (cart) => cart.cartItems[0].item.user.seller.username === sellerName
@@ -90,6 +93,8 @@ const CardGroup = (props) => {
               onChecked(props.cartItem[0].item.user.seller.username)
             }
             isChecked={checked}
+            text={props.cartItem[0].item.user.seller.username}
+            textStyle={{width: 100, marginStart: "100%"}}
           />
           <Image
             source={require("../../assets/store.png")}

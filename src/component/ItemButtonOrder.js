@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Pressable, Button } from "react-native";
 import { Text } from "native-base";
 import { currencyIdrConverter } from "../util/extensions";
 import Toast from "react-native-toast-message";
@@ -54,9 +54,16 @@ const ItemButtonOrder = (props) => {
   };
 
   const [addToCart] = useMutation(ADD_TO_CART_MUTATION, {
+    refetchQueries: [{
+      query: FETCH_USER_CART_QUERY
+    }],
+    variables: {
+      itemId: item.id,
+      isChecked: false,
+      amountItem: amountItem,
+      note: values.note,
+    },
     update(proxy, result) {
-      console.log("product added");
-      
       const data = proxy.readQuery({
         query: FETCH_USER_CART_QUERY,
       });
@@ -67,16 +74,24 @@ const ItemButtonOrder = (props) => {
           getUserCartItems: [result.data.addCartItem, ...data.getUserCartItems],
         },
       });
+      // console.log("user cart item", data);
+
+      const cartItem = proxy.readQuery({
+        query: FETCH_CART_QUERY,
+      });
+      proxy.writeQuery({
+        query: FETCH_CART_QUERY,
+        data: {
+          getUserCartItem: cartItem.getUserCartItem,
+        },
+      });
+      console.log("cartItem", cartItem);
+      
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
+      console.log("erorr add item")
       setSave(true);
-    },
-    variables: {
-      itemId: item.id,
-      isChecked: false,
-      amountItem: amountItem,
-      note: values.note,
     },
   });
 

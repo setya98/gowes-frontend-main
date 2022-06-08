@@ -29,9 +29,10 @@ const OrderDetail = (props) => {
   const [errors, setErrors] = useState({});
   const [stateType, setStateType] = useState("");
   const [editState, setEditState] = useState(false);
-
+  const review = false
   const order = props.route.params.order;
   const orderId = order.id;
+  console.log('props.order', order)
 
   let itemPrice;
   let amountItem;
@@ -43,6 +44,7 @@ const OrderDetail = (props) => {
         itemPrice = item.price;
         amountItem = item.amountItem;
         idTemp = item.id;
+        console.log("harga", itemPrice)
       })
     ) : (
       <></>
@@ -189,34 +191,8 @@ const OrderDetail = (props) => {
   }
   if (order.state.stateType === "COMPLETED") {
     orderActionButton = (
-      <View>
-        <TouchableOpacity
-          style={{
-            padding: 15,
-            borderRadius: 15,
-            backgroundColor: "#000",
-            alignSelf: "center",
-            marginTop: 30,
-            width: "90%",
-            marginBottom: "10%",
-          }}
-          mode="contained"
-          onPress={() =>
-            navigation.navigate("Add Product Review", { order: order })
-          }
-        >
-          <Text
-            style={{
-              color: "white",
-              alignSelf: "center",
-              fontWeight: "bold",
-              fontSize: 18,
-            }}
-          >
-            Tambah Ulasan
-          </Text>
-        </TouchableOpacity>
-      </View>
+      <>
+      </>
     );
   }
 
@@ -376,7 +352,7 @@ const OrderDetail = (props) => {
             }}
           />
           {order.items &&
-            order.items.map((item) => <OrderCardDetail item={item} />)}
+            order.items.map((item) => <OrderCardDetail item={item} review={1} order={order}/>)}
         </Card.Content>
         <Card.Content
           style={{
@@ -503,7 +479,7 @@ const OrderDetail = (props) => {
             <Text
               style={{ fontWeight: "bold", fontSize: 15, color: "#595959" }}
             >
-              Shipping Cost
+              Biaya Pengiriman
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16, color: "#000" }}>
               Rp {currencyIdrConverter(shippingCost, 0, ".", ",")}

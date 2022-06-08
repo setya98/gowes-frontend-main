@@ -36,7 +36,6 @@ export default function Main({ navigation }) {
             shadowOpacity: 0.25,
             shadowRadius: 3.5,
             backgroundColor: "#fff",
-            marginBottom: 1,
             shadowOffset: {
               width: 0,
               height: 10,
@@ -111,8 +110,6 @@ export default function Main({ navigation }) {
                     }}
                   />
                 </View>
-                <CartIcon />
-                {/* <BadgeIcon /> */}
               </View>
             ),
           })}

@@ -37,11 +37,16 @@ const Login = ({ navigation }) => {
     update(_, { data: { login: userData } }) {
       userData.name = userData.buyer.name;
       login(userData);
-      console.log(userData)
-      navigation.navigate(
-        "HomeTabNavigator"
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [
+            {
+              name: "HomeTabNavigator"
+            }
+          ]
+        })
       )
-      console.log(userData);
         Toast.show({
           topOffset: 30,
           type: "success",

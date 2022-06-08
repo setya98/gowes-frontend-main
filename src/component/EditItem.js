@@ -28,7 +28,7 @@ var { height, width } = Dimensions.get("window");
 
 const EditItem = (props) => {
   const itemData = props.route.params.itemData
-  console.log("form", itemData)
+  // console.log("form", itemData)
   const { colors } = useTheme();
   const [errors, setErrors] = useState({});
   const [isSaved, setSave] = useState(false);
@@ -78,9 +78,9 @@ const EditItem = (props) => {
       props.navigation.navigate("Product Container");
     },
     onError(err) {
-      console.log("error");
+      // console.log("error");
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      console.log(err.graphQLErrors[0]);
+      // console.log(err.graphQLErrors[0]);
     },
     variables: values,
   });

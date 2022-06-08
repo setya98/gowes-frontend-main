@@ -11,19 +11,19 @@ function OrderCardComponent(props) {
   const navigation = useNavigation();
   const order = props.order;
 
-  let itemPrice;
-  let amountItem;
+  // let itemPrice;
+  // let amountItem;
 
-  {
-    order.items.map((item) => {
-      itemPrice = item.price;
-      amountItem = item.amountItem;
-    });
-  }
-  const shippingCost = order.shipping.shippingCost;
+  // {
+  //   order.items.map((item) => {
+  //     itemPrice = item.price;
+  //     amountItem = item.amountItem;
+  //   });
+  // }
+  // const shippingCost = order.shipping.shippingCost;
 
-  const grossAmount = itemPrice * amountItem;
-  const totalPrice = grossAmount + shippingCost;
+  // const grossAmount = itemPrice * amountItem;
+  // const totalPrice = grossAmount + shippingCost;
 
   return (
     <Card

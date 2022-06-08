@@ -26,7 +26,7 @@ const Seller = (props) => {
   const { user } = useContext(AuthContext);
   console.log("user login", user.id);
 
-  const { loading, data } = useQuery(FETCH_USER_QUERY, {
+  const { loading, data, refetch } = useQuery(FETCH_USER_QUERY, {
     variables: {
       userId: user.id,
     },
@@ -183,7 +183,6 @@ const Seller = (props) => {
                     width: 1,
                     height: 50,
                     backgroundColor: "#c9c7c7",
-                    marginStart: 20,
                     marginTop: 5,
                   }}
                 />
@@ -202,32 +201,7 @@ const Seller = (props) => {
               </Text>
               </View>
               </View>
-            {/* <View
-              style={{ flexDirection: "row", marginStart: 80, marginTop: 10 }}
-            >
-              <StarIcon name="star" size={20} color={"#F18c06"} />
-              <Text
-                style={{
-                  color: "#000",
-                  fontWeight: "bold",
-                  fontSize: 22,
-                  marginStart: 5,
-                }}
-              >
-                4.8
-              </Text>
-              <Text
-                style={{
-                  color: "#595959",
-                  fontWeight: "bold",
-                  marginStart: 7,
-                  marginTop: 5,
-                }}
-              >
-                Rating
-              </Text>
-            </View> */}
-
+            
             <View style={styles.detailContainer}>
               <View
                 style={{

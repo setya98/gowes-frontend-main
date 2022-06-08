@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -17,6 +17,10 @@ var { width } = Dimensions.get("window");
 const ProductCardSeller = (props) => {
   const navigation = useNavigation();
   const { item} = props;
+
+  useEffect(() => {
+    props.refetchCatalog()
+  }, [])
 
   const { loading, data: data } = useQuery(FETCH_SINGLE_ITEM_QUERY, {
     variables: {

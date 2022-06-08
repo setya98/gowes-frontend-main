@@ -50,7 +50,7 @@ const Wishlist = (props) => {
         <>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: 190}}
+          contentContainerStyle={{paddingBottom: 100}}
         >
           {!loading ? (
             bookmarks.length > 0 ? (

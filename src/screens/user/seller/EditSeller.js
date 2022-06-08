@@ -140,12 +140,15 @@ const EditSeller = (props) => {
   // };
 
   const [sellerProfileUpdate] = useMutation(UPDATE_SELLER_PROFILE_MUTATION, {
+    refetchQueries: [{
+      query: FETCH_USER_QUERY
+    }],
     update(_, { data: { updateSellerProfile: sellerData } }) {
       sellerData.username = sellerData.seller.username;
       context.login(sellerData)
       console.log("updated")
       setErrors({});
-      props.navigation.navigate("Seller");
+      props.navigation.dispatch(CommonActions.goBack());
       Toast.show({
         topOffset: 30,
         type: "success",

@@ -528,7 +528,7 @@ const OrderDetailSeller = (props) => {
             <Text
               style={{ fontWeight: "bold", fontSize: 15, color: "#595959" }}
             >
-              Shipping Cost
+              Biaya Pengiriman
             </Text>
             <Text style={{ fontWeight: "bold", fontSize: 16, color: "#000" }}>
               Rp {currencyIdrConverter(shippingCost, 0, ".", ",")}

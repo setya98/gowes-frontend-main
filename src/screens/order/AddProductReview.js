@@ -25,6 +25,7 @@ import Material from "react-native-vector-icons/MaterialCommunityIcons";
 import { useMutation } from "@apollo/react-hooks";
 import { connect } from "react-redux";
 import { storage } from "../../firebase";
+import { useQuery } from "@apollo/client";
 import { useForm } from "../../util/hooks";
 import { ADD_REVIEW_MUTATION, FETCH_ITEM_REVIEWS } from "../../util/graphql";
 
@@ -33,117 +34,96 @@ import OrderCardDetail from "../../component/OrderCardDetail";
 var { height } = Dimensions.get("window");
 
 const AddProductReview = (props) => {
-  const order = props.route.params.order;
+  const item = props.route.params.item;
+  console.log("item id", item.id)
   const { colors } = useTheme();
   const [errors, setErrors] = useState({});
-  // const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0);
   const [itemId, setItemId] = useState("");
-  // const [body, setBody] = useState("");
-  const [image, setImage] = useState([]);
+  const [body, setBody] = useState("");
+  const [showReviewButton, setShowReviewButton] = useState(false);
+  const { data } = useQuery(FETCH_ITEM_REVIEWS, {
+    variables: {
+      itemId: item.id
+    }
+  })
+  const { getItemReviews: reviews } = data ? data : [];
+  // console.log("reviews", reviews)
 
-  console.log("foto", props.photos);
+  const handleRating = (rating) => {
+    setScore(rating);
+  };
 
-  let itemPrice;
-  let amountItem;
-  let idTemp;
+  const handleChange = (val) => {
+    setBody(val);
+  };
 
-  {
-    order.items.map((item) => {
-      itemPrice = item.price;
-      amountItem = item.amountItem;
-      idTemp = item.id;
-    });
-  }
+  const reviewHandler = () => {
+    addReviewProduct();
+  };
 
-  // const handleRating = (rating) => {
-  //   setScore(rating);
-  // };
+  // let itemPrice;
+  // let amountItem;
+  // let idTemp;
 
-  // const handleChange = (val) => {
-  //   setBody(val);
-  // };
-
-  // const reviewHandler = () => {
-  //   addReview();
-  //   // addReviewProduct()
-  // };
-
-  const { onChange, onSubmit, values } = useForm(addReview, {
-    body: "",
-    score: 0,
-    itemId: itemId
-  });
-
-  // const pickImage = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
+  // {
+  //   order.items.map((item) => {
+  //     itemPrice = item.price;
+  //     amountItem = item.amountItem;
+  //     idTemp = item.id;
   //   });
+  // }
 
-  //   if (!result.cancelled) {
-  //     uploadImage(result.uri, `avatar-${new Date().toISOString()}`)
-  //       .then(() => {
-  //         console.log("Success");
-  //       })
-  //       .catch((error) => {
+  // const { onChange, onSubmit, values } = useForm(addReview, {
+  //   body: "",
+  //   score: 0,
+  //   itemId: itemId
+  // });
+
+  // const uploadImage = async (uri, imageName) => {
+  //   if (uri) {
+  //     const response = await fetch(uri);
+  //     const blob = await response.blob();
+  //     const uploadTask = storage
+  //       .ref(`images/itemReview/${imageName}`)
+  //       .put(blob);
+  //     uploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {},
+  //       (error) => {
   //         console.log(error);
-  //       });
+  //       },
+  //       () => {
+  //         storage
+  //           .ref("images/itemReview")
+  //           .child(imageName)
+  //           .getDownloadURL()
+  //           .then((url) => {
+  //             setImage((img) => [...img, url]);
+  //             console.log("img url", url);
+  //           });
+  //       }
+  //     );
   //   }
   // };
 
-  const uploadImage = async (uri, imageName) => {
-    if (uri) {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-      const uploadTask = storage.ref(`images/itemReview/${imageName}`).put(blob);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {},
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          storage
-            .ref("images/itemReview")
-            .child(imageName)
-            .getDownloadURL()
-            .then((url) => {
-              setImage((img) => [...img, url]);
-              console.log("img url", url);
-            });
-        }
-      );
-    }
-  };
-
-  useEffect(() => {
-    console.log(image.length, "here");
-    if (props.photos && image.length == props.photos.length) {
-      let downloadUrlImages = [];
-      image.forEach((img) => {
-        downloadUrlImages.push({
-          downloadUrl: img,
-        });
-      });
-      values.images = downloadUrlImages;
-      addReviewProduct();
-    }
-  }, [image]);
+  // useEffect(() => {
+  //   console.log(image.length, "here");
+  //   if (props.photos && image.length == props.photos.length) {
+  //     let downloadUrlImages = [];
+  //     image.forEach((img) => {
+  //       downloadUrlImages.push({
+  //         downloadUrl: img,
+  //       });
+  //     });
+  //     values.images = downloadUrlImages;
+  //     addReviewProduct();
+  //   }
+  // }, [image]);
 
   const [addReviewProduct] = useMutation(ADD_REVIEW_MUTATION, {
-    update(proxy, result) {
+    update(_, { data: { addReview: reviews } }) {
       console.log("review added");
-      const data = proxy.readQuery({
-        query: FETCH_ITEM_REVIEWS,
-      });
-
-      proxy.writeQuery({
-        query: FETCH_ITEM_REVIEWS,
-        data: { getItems: [result.data.addReview, ...data.getItemReviews] },
-      });
-
       props.navigation.navigate("Buyer");
       Toast.show({
         topOffset: 30,
@@ -155,38 +135,39 @@ const AddProductReview = (props) => {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
     },
     variables: {
-      body: values.body,
-      score: parseInt(values.score)
-    }
+      body: body,
+      score: score,
+      itemId: item.id
+    },
   });
-
-  function addReview() {
-    props.photos.forEach((pic) => {
-      uploadImage(pic.uri, `item-${new Date().toISOString()}`)
-        .then(() => {
-          console.log("Success");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  }
 
   return (
     <SafeAreaView style={{ backgroundColor: "#fff" }}>
       <View style={styles.header}>
-        <FontAwesome
-          onPress={() => props.navigation.goBack()}
-          name="chevron-left"
-          size={18}
-          style={{ top: 4 }}
-        />
+        <View
+          style={{
+            height: 35,
+            width: 35,
+            backgroundColor: "#000",
+            alignItems: "center",
+            borderRadius: 10,
+            justifyContent: "center",
+            elevation: 3,
+          }}
+        >
+          <FontAwesome
+            onPress={() => props.navigation.goBack()}
+            name="chevron-left"
+            size={14}
+            style={{ marginStart: -2, color: "#fff" }}
+          />
+        </View>
         <Text
           style={{
             fontSize: 20,
             fontWeight: "bold",
             letterSpacing: 0.3,
-            marginStart: 110,
+            marginStart: 80,
           }}
         >
           Nilai Produk
@@ -210,8 +191,7 @@ const AddProductReview = (props) => {
             paddingTop: 15,
           }}
         >
-          {order.items &&
-            order.items.map((item) => <OrderCardDetail item={item} />)}
+          <OrderCardDetail item={item} review={showReviewButton} />
         </Card.Content>
         <Card.Content
           style={{
@@ -224,7 +204,9 @@ const AddProductReview = (props) => {
             paddingTop: 15,
           }}
         >
-          <Text style={{fontWeight: "bold", fontSize: 18, marginBottom: 15}}>Beri Rating</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 15 }}>
+            Beri Rating
+          </Text>
           <Divider
             style={{
               height: 1,
@@ -239,7 +221,7 @@ const AddProductReview = (props) => {
             ratingCount={5}
             imageSize={30}
             showRating
-            onFinishRating={(rating) => onChange(rating)}
+            onFinishRating={(rating) => handleRating(rating)}
           />
         </Card.Content>
         <Card.Content
@@ -253,7 +235,9 @@ const AddProductReview = (props) => {
             paddingTop: 15,
           }}
         >
-          <Text style={{fontWeight: "bold", fontSize: 18, marginBottom: 15}}>Detail Ulasan</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18, marginBottom: 15 }}>
+            Detail Ulasan
+          </Text>
           <Divider
             style={{
               height: 1,
@@ -262,155 +246,28 @@ const AddProductReview = (props) => {
               marginBottom: 25,
             }}
           />
-          {/* <View style={{ alignItems: "center", marginBottom: 10 }}>
-            <TouchableOpacity onPress={pickImage}>
-              <View
-                style={{
-                  height: 100,
-                  width: 100,
-                  borderRadius: 15,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ImageBackground
-                  // source={{ uri: loading ? avatar : currentUser.buyer.avatar }}
-                  style={{
-                    height: 100,
-                    width: 100,
-                    marginTop: 15,
-                    backgroundColor: "#8c8c8c",
-                    borderRadius: 25,
-                  }}
-                  imageStyle={{ borderRadius: 25 }}
-                >
-                  <View
-                    style={{
-                      flex: 1,
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <FontAwesome
-                      name="camera"
-                      size={30}
-                      color={"#fff"}
-                      style={{
-                        opacity: 0.7,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    />
-                  </View>
-                </ImageBackground>
-              </View>
-            </TouchableOpacity>
-          </View> */}
-          {props.photos ? (
-            <View
-              style={{
-                alignItems: "center",
-                marginBottom: 10,
-                marginTop: 15,
-              }}
-            >
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              >
-                <TouchableOpacity
-                 onPress={() => props.navigation.navigate("Image Picker")}
-                  style={{
-                    flexDirection: "row",
-                    marginStart: 25,
-                    marginEnd: 25,
-                  }}
-                >
-                  {props.photos.map((pic) => (
-                    <View
-                      style={{
-                        height: 100,
-                        width: 100,
-                        borderRadius: 15,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginHorizontal: 5,
-                      }}
-                    >
-                      <ImageBackground
-                        source={{
-                          uri: pic.uri,
-                        }}
-                        style={{ height: 100, width: 100 }}
-                        imageStyle={{ borderRadius: 20 }}
-                      ></ImageBackground>
-                    </View>
-                  ))}
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
-          ) : (
-            <View
-              style={{
-                alignItems: "center",
-              }}
-            >
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate("Image Picker")}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <View
-                    style={{
-                      height: 100,
-                      marginTop: 15,
-                      width: "90%",
-                      marginStart: 15,
-                      borderRadius: 20,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#fff",
-                      borderWidth: 1,
-                      borderColor: "#000",
-                      borderTopColor: "#000",
-                      borderStyle: "dashed",
-                    }}
-                  >
-                    <Image
-                      source={require("../../assets/plus.png")}
-                      style={{
-                        opacity: 0.8,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        tintColor: "#000",
-                        width: 25,
-                        height: 25,
-                      }}
-                    />
-                  </View>
-                </View>
-              </TouchableOpacity>
-            </View>
-          )}
           <View style={styles.action}>
-          <TextInput
-            name="body"
-            placeholder="Tulis ulasan produk"
-            placeholderTextColor="#666666"
-            value={values.body}
-            onChangeText={(val) => onChange("body", val)}
-            autoCorrect={false}
-            style={[
-              styles.textInput,
-              {
-                color: colors.text,
-              },
-            ]}
-          />
+            <TextInput
+              name="body"
+              placeholder="Tulis ulasan produk"
+              placeholderTextColor="#666666"
+              value={body}
+              onChangeText={(val) => handleChange(val)}
+              autoCorrect={false}
+              style={[
+                styles.textInput,
+                {
+                  color: colors.text,
+                },
+              ]}
+            />
           </View>
         </Card.Content>
         <TouchableOpacity
           style={styles.commandButtonSave}
-          onPress={onSubmit}
+          onPress={() => {
+           reviewHandler();
+          }}
         >
           <Text style={styles.panelButtonTitle}>Simpan</Text>
         </TouchableOpacity>
@@ -450,7 +307,7 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: "row",
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 10,
     height: 125,
     marginStart: 15,
@@ -464,12 +321,13 @@ const styles = StyleSheet.create({
 });
 
 AddProductReview.propTypes = {
-    uploadMultipleImage: PropTypes.func.isRequired,
-    photos: PropTypes.array,
-  };
-  const mapStateToProps = (state) => ({
-    photos: state.imagePicker.photos,
-  });
-  
-  export default connect(mapStateToProps, { uploadMultipleImage })(AddProductReview);
-  
+  uploadMultipleImage: PropTypes.func.isRequired,
+  photos: PropTypes.array,
+};
+const mapStateToProps = (state) => ({
+  photos: state.imagePicker.photos,
+});
+
+export default connect(mapStateToProps, { uploadMultipleImage })(
+  AddProductReview
+);

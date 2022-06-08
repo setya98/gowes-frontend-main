@@ -6,13 +6,13 @@ import { Avatar, Card, List, Divider } from "react-native-paper";
 var { width } = Dimensions.get("window");
 
 const SearchedProduct = (props) => {
-  const { productsFiltered, userId } = props;
-
+  const { pencarian, userId } = props;
+  
   return (
     <Content style={{ width: width }}>
       <View>
-      {productsFiltered.length > 0 ? (
-        productsFiltered.map((item) => (
+      {pencarian && pencarian.length > 0 ? (
+        pencarian.map((item) => (
           <Card>
             <Divider
               style={{

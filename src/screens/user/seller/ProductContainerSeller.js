@@ -96,7 +96,7 @@ const ProductContainerSeller = (props) => {
           size > 0 ? (
             <ScrollView
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 200 }}
+              contentContainerStyle={{ paddingBottom: height }}
             >
               <View style={styles.listContainer}>
                 {sellerItems &&

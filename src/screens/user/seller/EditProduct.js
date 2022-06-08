@@ -18,11 +18,11 @@ import { Text } from "native-base";
 import { uploadMultipleImage } from "../../../../Redux/actions/imagePickerAction";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Animated from "react-native-reanimated";
-import * as ImagePicker from "expo-image-picker";
 import Toast from "react-native-toast-message";
 import PropTypes from "prop-types";
 import BottomSheet from "reanimated-bottom-sheet";
 
+import { CommonActions } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import { connect } from "react-redux";
 import { storage } from "../../../firebase";
@@ -32,6 +32,7 @@ import {
   UPDATE_ITEM_MUTATION,
   DELETE_ITEM_MUTATION,
   FETCH_ITEM_SELLER_QUERY,
+  FETCH_ITEMS_QUERY,
 } from "../../../util/graphql";
 
 var { height, width } = Dimensions.get("window");
@@ -42,7 +43,6 @@ const EditProduct = (props) => {
   const { colors } = useTheme();
   const context = useContext(AuthContext);
   const [errors, setErrors] = useState({});
-  const [isSaved, setSave] = useState(false);
   const [image, setImage] = useState([]);
 
   console.log("category", typeof product.getItem.category);
@@ -94,39 +94,6 @@ const EditProduct = (props) => {
 
   const { onChange, onSubmit, values } = useForm(editItem, itemObj);
 
-  // const [values, setValues] = useState({
-  //   name: product.getItem.name,
-  //   price: product.getItem.price.toString(),
-  //   stock: product.getItem.stock.toString(),
-  //   category: product.getItem.category,
-  //   condition: product.getItem.condition,
-  //   weight: product.getItem.weight.toString(),
-  //   description: product.getItem.description,
-  //   length: product.getItem.dimension.length.toString(),
-  //   width: product.getItem.dimension.width.toString(),
-  //   height: product.getItem.dimension.height.toString(),
-  //   itemId: itemId,
-  //   images: [
-  //     {
-  //       downloadUrl:
-  //         "https://react.semantic-ui.com/images/avatar/large/molly.png",
-  //     },
-  //     {
-  //       downloadUrl:
-  //         "https://react.semantic-ui.com/images/avatar/large/molly.png",
-  //     },
-  //   ],
-  // });
-
-  // const onChange = (key, val) => {
-  //   setValues({ ...values, [key]: val });
-  // };
-
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
-  //   editItem();
-  // };
-
   const uploadImage = async (uri, imageName) => {
     if (uri) {
       const response = await fetch(uri);
@@ -168,6 +135,9 @@ const EditProduct = (props) => {
   }, [image]);
 
   const [updateItem] = useMutation(UPDATE_ITEM_MUTATION, {
+    refetchQueries: [{
+      query: FETCH_ITEMS_QUERY,
+    }],
     update(_, { data: { updateItem: updatedItem } }) {
       setErrors({});
       Toast.show({
@@ -175,7 +145,7 @@ const EditProduct = (props) => {
         type: "success",
         text1: "Produk Berhasil Tersimpan",
       });
-      props.navigation.navigate("Product Container");
+      props.navigation.dispatch("Product Container");
     },
     onError(err) {
       console.log("error");
@@ -195,7 +165,7 @@ const EditProduct = (props) => {
           console.log(error);
         });
     });
-    (values.price = parseInt(values.price)),
+      (values.price = parseInt(values.price)),
       (values.stock = parseInt(values.stock)),
       (values.weight = parseInt(values.weight)),
       (values.length = parseInt(values.length)),
@@ -208,6 +178,9 @@ const EditProduct = (props) => {
   }
 
   const [deleteItem] = useMutation(DELETE_ITEM_MUTATION, {
+    refetchQueries: [{
+      query: FETCH_ITEMS_QUERY
+    }],
     update(proxy) {
       const data = proxy.readQuery({
         query: FETCH_ITEM_SELLER_QUERY,
@@ -227,7 +200,7 @@ const EditProduct = (props) => {
         type: "success",
         text1: "Produk Berhasil Dihapus",
       });
-      props.navigation.navigate("Seller");
+      props.navigation.dispatch(CommonActions.goBack());
     },
     variables: { itemId: itemId },
   });

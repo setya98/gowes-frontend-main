@@ -21,6 +21,7 @@ import { objectSize } from "../../util/extensions";
 import { FETCH_USER_CART_QUERY } from "../../util/graphql";
 import ItemSummaryCart from "./ItemSummaryCart";
 import CardGroup from "./CardGroup";
+import { TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 var { height, width } = Dimensions.get("window");
 
@@ -29,11 +30,10 @@ const Cart = (props) => {
   let { getUserCartItems: cartItems } = data ? data : [];
 
   var size = objectSize(cartItems);
-  console.log("size", size);
+  // console.log("cart item", cartItems);
 
   useEffect(() => {
     if (size > 0) {
-      // console.log("size", size);
       let group = cartItems.reduce((r, a) => {
         r[a.item.user.id] = [...(r[a.item.user.id] || []), a];
         return r;
@@ -135,6 +135,7 @@ const Cart = (props) => {
                 Bag
               </Text>
             </View>
+
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={{
@@ -163,8 +164,7 @@ const Cart = (props) => {
                 elevation: 0.6,
               }}
             >
-              {/* <Button onPress={dosomething}><Text>Oke</Text></Button> */}
-              <ItemSummaryCart navigation={props.navigation} />
+              <ItemSummaryCart navigation={props.navigation} refetchSummary={refetch} />
             </View>
           </SafeAreaView>
         </>

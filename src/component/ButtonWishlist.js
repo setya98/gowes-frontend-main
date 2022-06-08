@@ -23,6 +23,9 @@ function ButtonWishlist({ user, item: {id, bookmarkedBy} }) {
   const [errors, setErrors] = useState({});
 
   const [wishlistItem] = useMutation(BOOKMARK_ITEM_MUTATION, {
+    // refetchQueries: [{
+    //   query: FETCH_BOOKMARKS_QUERY
+    // }],
     variables: { itemId: id },
     update(proxy, result) {
       const data = proxy.readQuery({
@@ -53,7 +56,7 @@ function ButtonWishlist({ user, item: {id, bookmarkedBy} }) {
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
-      console.log(errors);
+      // console.log(errors);
     },
   });
 

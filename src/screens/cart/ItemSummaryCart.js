@@ -26,6 +26,9 @@ const ItemSummaryCart = (props) => {
     });
     setAmount(amountCounter);
     setSubTotal(total);
+    props.refetchSummary()
+    console.log("cart counter", amountCounter)
+    // console.log("refetch", props.refetchSummary())
   }, [props.carts, props.isChange]);
 
   function checkout() {

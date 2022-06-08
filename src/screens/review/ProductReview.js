@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View, SafeAreaView, Dimensions, ActivityIndicator, Image } from "react-native";
 import { Card, Chip } from "react-native-paper";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -17,13 +17,16 @@ const ProductReview = (props) => {
   const [activeChip, setActiveChip] = useState("All");
   const [active, setActive] = useState(-1);
 
-  const { loading, data } = useQuery(FETCH_ITEM_REVIEWS, {
+  const { loading, data, refetch } = useQuery(FETCH_ITEM_REVIEWS, {
     variables: {
       itemId: item.id
     }
   })
   const { getItemReviews: reviews } = data ? data : []
-
+  
+  useEffect(() => {
+    refetch()
+  })
   // console.log("score", reviews.score)
 
   const handleChip = (name) => {
